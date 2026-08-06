@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+
+/**
+ * Restrained palette: warm paper background, near-black ink, one deep
+ * evergreen for actions and one ochre accent used sparingly. Nothing here
+ * is a gradient and nothing glows.
+ */
+@theme {
+  --color-paper: #fbfaf8;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f4f2ee;
+
+  --color-ink: #16181a;
+  --color-ink-muted: #5a6068;
+  --color-ink-subtle: #83898f;
+
+  --color-line: #e4e1da;
+  --color-line-strong: #cfcbc1;
+
+  --color-brand: #14453d;
+  --color-brand-hover: #0e332d;
+  --color-brand-soft: #e8efec;
+  --color-brand-ink: #0b241f;
+
+  --color-accent: #a9662a;
+  --color-accent-soft: #f6eee4;
+
+  --color-danger: #97331f;
+  --color-danger-soft: #fbeeea;
+  --color-success: #1f6b46;
+  --color-success-soft: #e9f3ed;
+
+  --font-sans: var(--font-noto-georgian), 'Noto Sans Georgian', 'Segoe UI', system-ui,
+    -apple-system, sans-serif;
+
+  /* Tightened tracking on the big sizes; Mkhedruli has no capitals to carry
+     a headline, so size and weight do the work instead. */
+  --text-display: 3.25rem;
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.02em;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'case' 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* One focus treatment everywhere, always visible — never `outline: none`. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-soft);
+    color: var(--color-brand-ink);
+  }
+}
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 76rem;
+  padding-inline: 1.25rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+}
