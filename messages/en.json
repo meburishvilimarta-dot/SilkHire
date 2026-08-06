@@ -1,0 +1,623 @@
+{
+  "meta": {
+    "home": {
+      "title": "SilkHire — vetted outsourcing teams in India and the Philippines",
+      "description": "SilkHire connects Georgian businesses with vetted outsourcing agencies and freelancers in India and the Philippines. Compare costs, review teams, and start in weeks rather than months."
+    },
+    "agencies": {
+      "title": "Agency directory",
+      "description": "Browse vetted outsourcing agencies in India and the Philippines. Filter by country, service, team size, English level and hourly rate."
+    },
+    "agencyDetail": {
+      "description": "{name} — a vetted {country} agency on SilkHire. {summary}"
+    },
+    "forAgencies": {
+      "title": "For agencies",
+      "description": "Are you an outsourcing agency in India or the Philippines? Apply to be listed on SilkHire and reach Georgian companies looking for offshore teams."
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "description": "From brief to signed contract in about four weeks. Here is exactly what happens at each step, and what SilkHire does on your behalf."
+    },
+    "about": {
+      "title": "About SilkHire",
+      "description": "Why we built a directory of vetted offshore agencies for the Georgian market, and how we make money."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Talk to the SilkHire team about your outsourcing plans, or ask a question about the directory."
+    }
+  },
+
+  "nav": {
+    "home": "Home",
+    "agencies": "Agencies",
+    "howItWorks": "How it works",
+    "forAgencies": "For agencies",
+    "about": "About",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "primary": "Primary",
+    "footer": "Footer",
+    "skipToContent": "Skip to content"
+  },
+
+  "localeSwitcher": {
+    "label": "Language",
+    "ka": "ქართული",
+    "en": "English",
+    "kaShort": "KA",
+    "enShort": "EN"
+  },
+
+  "common": {
+    "findTeam": "Find a team",
+    "listAgency": "List your agency",
+    "browseAgencies": "Browse agencies",
+    "viewProfile": "View profile",
+    "backToAgencies": "Back to all agencies",
+    "learnMore": "Learn more",
+    "getInTouch": "Get in touch",
+    "perHour": "/hr",
+    "perMonth": "/month",
+    "people": "{count, plural, one {# person} other {# people}}",
+    "months": "{count, plural, one {# month} other {# months}}",
+    "hours": "{count, plural, one {# hour} other {# hours}}",
+    "since": "Since {year}",
+    "loading": "Loading…"
+  },
+
+  "taxonomies": {
+    "categories": {
+      "customer-support": "Customer support",
+      "software-development": "Software development",
+      "accounting-back-office": "Accounting & back office",
+      "digital-marketing": "Digital marketing"
+    },
+    "categoryDescriptions": {
+      "customer-support": "Chat, email and voice teams that answer your customers in English, on your tools, on your tone of voice.",
+      "software-development": "Engineers who join your sprints — web, mobile, data and infrastructure — rather than disappearing behind a spec.",
+      "accounting-back-office": "Bookkeeping, reconciliation, payables, payroll preparation and the document work nobody wants to hire for locally.",
+      "digital-marketing": "Paid media, SEO, content and creative production, reported against pipeline instead of vanity metrics."
+    },
+    "countries": {
+      "GE": "Georgia",
+      "IN": "India",
+      "PH": "Philippines"
+    },
+    "teamSizes": {
+      "1-10": "1–10",
+      "11-50": "11–50",
+      "51-200": "51–200",
+      "200+": "200+"
+    },
+    "englishLevels": {
+      "conversational": "Conversational",
+      "professional": "Professional",
+      "native-equivalent": "Native-equivalent"
+    },
+    "englishLevelHints": {
+      "conversational": "Comfortable in writing and routine calls.",
+      "professional": "Handles negotiation, documentation and client-facing calls.",
+      "native-equivalent": "Indistinguishable from a native speaker to your customers."
+    },
+    "rateBuckets": {
+      "under-15": "Under $15/hr",
+      "15-25": "$15–25/hr",
+      "25-40": "$25–40/hr",
+      "over-40": "Over $40/hr"
+    },
+    "engagementModels": {
+      "dedicated-team": "Dedicated team",
+      "project-based": "Project-based",
+      "staff-augmentation": "Staff augmentation",
+      "bpo-seat": "BPO seat"
+    },
+    "vettingChecks": {
+      "legal-entity": "Legal entity verified",
+      "client-references": "Client references checked",
+      "english-interview": "English interview passed",
+      "security-review": "Security review completed",
+      "sample-work": "Sample work reviewed"
+    },
+    "languages": {
+      "hi": "Hindi",
+      "mr": "Marathi",
+      "gu": "Gujarati",
+      "kn": "Kannada",
+      "ta": "Tamil",
+      "te": "Telugu",
+      "pa": "Punjabi",
+      "tl": "Tagalog",
+      "ceb": "Cebuano",
+      "hil": "Hiligaynon"
+    }
+  },
+
+  "home": {
+    "hero": {
+      "eyebrow": "For Georgian businesses",
+      "title": "Build your team abroad, without guessing who to trust",
+      "subtitle": "SilkHire connects companies in Georgia with vetted outsourcing agencies and freelancers in India and the Philippines. We check the legal entity, the references and the English before an agency appears in the directory.",
+      "primaryCta": "Find a team",
+      "secondaryCta": "List your agency",
+      "stats": {
+        "agencies": "Vetted agencies",
+        "countries": "Countries",
+        "timeToShortlist": "Days to a shortlist"
+      }
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "title": "Three steps, about four weeks",
+      "subtitle": "You describe the work. We shortlist. You choose and sign directly with the agency.",
+      "steps": {
+        "brief": {
+          "number": "01",
+          "title": "Tell us what you need",
+          "body": "One short brief: the roles, the headcount, the budget and when you want to start. It takes about five minutes and there is no charge."
+        },
+        "shortlist": {
+          "number": "02",
+          "title": "Get a shortlist in five days",
+          "body": "We match your brief against vetted agencies and send you three to five that genuinely fit — with rates, references and time-zone overlap already confirmed."
+        },
+        "start": {
+          "number": "03",
+          "title": "Meet, choose, start",
+          "body": "You interview the shortlist and sign directly with the agency you pick. We stay involved through onboarding and check in through the first quarter."
+        }
+      },
+      "cta": "Start a brief"
+    },
+    "costComparison": {
+      "eyebrow": "What it costs",
+      "title": "The same role, three markets",
+      "subtitle": "Fully-loaded monthly cost for one mid-level person, agency margin included. Figures are indicative and depend on seniority, contract length and team size.",
+      "roleColumn": "Role",
+      "savingLabel": "vs Georgia",
+      "roles": {
+        "support-agent": "Customer support agent",
+        "software-engineer": "Mid-level software engineer",
+        "bookkeeper": "Bookkeeper",
+        "marketing-specialist": "Digital marketing specialist"
+      },
+      "disclaimer": "Placeholder figures for illustration. Actual quotes come from the agency and are confirmed before you sign.",
+      "tableCaption": "Indicative monthly cost per role by market, in US dollars"
+    },
+    "services": {
+      "eyebrow": "What you can outsource",
+      "title": "Four things Georgian companies hire for most",
+      "subtitle": "Every agency in the directory is categorised by what it actually delivers, not what its website claims.",
+      "cta": "See agencies"
+    },
+    "trust": {
+      "eyebrow": "Vetting",
+      "title": "Why the directory is short",
+      "subtitle": "We turn down most agencies that apply. Every listing has cleared the same five checks, and we re-run them once a year.",
+      "checks": {
+        "legal-entity": {
+          "title": "Legal entity verified",
+          "body": "We confirm the company is registered where it says it is, and that the person signing has authority to sign."
+        },
+        "client-references": {
+          "title": "Client references checked",
+          "body": "We speak to two current clients directly — not a testimonial page — and ask what went wrong, not just what went well."
+        },
+        "english-interview": {
+          "title": "English interview passed",
+          "body": "A live call with the people who would actually work on your account, rated against the level the agency claims."
+        },
+        "security-review": {
+          "title": "Security review completed",
+          "body": "Data handling, access control and any certifications are reviewed before an agency can take regulated or financial work."
+        },
+        "sample-work": {
+          "title": "Sample work reviewed",
+          "body": "Real deliverables from a real engagement, reviewed by someone who does that work for a living."
+        }
+      },
+      "note": "Agencies pay to be listed. They cannot pay to skip a check or to rank higher — see <aboutLink>how we make money</aboutLink>."
+    }
+  },
+
+  "agencies": {
+    "title": "Agency directory",
+    "subtitle": "{count, plural, =0 {No agencies match these filters} one {# vetted agency} other {# vetted agencies}} in India and the Philippines.",
+    "filters": {
+      "heading": "Filters",
+      "country": "Country",
+      "category": "Service",
+      "teamSize": "Team size",
+      "english": "English (at least)",
+      "rate": "Hourly rate",
+      "anyEnglish": "Any level",
+      "anyRate": "Any rate",
+      "clear": "Clear all",
+      "activeCount": "{count, plural, one {# filter active} other {# filters active}}",
+      "toggle": "Filters",
+      "apply": "Show results",
+      "resultsAnnouncement": "{count, plural, =0 {No agencies match} one {# agency matches} other {# agencies match}} the current filters."
+    },
+    "empty": {
+      "title": "Nothing matches those filters",
+      "body": "Try widening the rate range or removing a service category. If you cannot find a fit, send us a brief and we will look beyond the directory.",
+      "cta": "Send a brief"
+    },
+    "card": {
+      "team": "{count, plural, one {# person} other {# people}}",
+      "rate": "{range}/hr",
+      "vetted": "Vetted",
+      "pending": "Vetting in progress",
+      "overlap": "{hours}h overlap with Tbilisi"
+    }
+  },
+
+  "agencyDetail": {
+    "about": "About",
+    "specialties": "Specialties",
+    "atAGlance": "At a glance",
+    "founded": "Founded",
+    "teamSize": "Team size",
+    "location": "Location",
+    "english": "English level",
+    "languages": "Other languages",
+    "rate": "Hourly rate",
+    "engagement": "Engagement models",
+    "minEngagement": "Minimum engagement",
+    "timezone": "Time zone",
+    "overlap": "Overlap with Tbilisi",
+    "overlapValue": "{hours} hours a day",
+    "certifications": "Certifications",
+    "noCertifications": "None recorded",
+    "vetting": "Vetting",
+    "vettedOn": "Verified {date}",
+    "pendingNote": "This agency is part-way through vetting. The checks below have been completed so far.",
+    "caseStudies": "Case studies",
+    "caseStudyIndustry": "Industry",
+    "caseStudyTeam": "Team",
+    "caseStudyDuration": "Duration",
+    "caseStudyResult": "Result",
+    "cta": {
+      "title": "Interested in {name}?",
+      "body": "Send us a brief and we will introduce you, along with any other agencies that fit the same requirement.",
+      "button": "Send a brief"
+    },
+    "notFound": {
+      "title": "Agency not found",
+      "body": "That listing may have been removed or the link may be wrong.",
+      "cta": "Back to the directory"
+    }
+  },
+
+  "forAgencies": {
+    "hero": {
+      "eyebrow": "For agencies in India and the Philippines",
+      "title": "Reach Georgian companies that are ready to hire",
+      "subtitle": "SilkHire is a small, vetted directory — not a bidding platform. Georgian businesses come to us with a signed-off budget and a start date, and we introduce them to three to five agencies that genuinely fit."
+    },
+    "why": {
+      "title": "Why list with us",
+      "items": {
+        "qualified": {
+          "title": "Qualified briefs only",
+          "body": "Every brief has a named company, a budget range and a start date before it reaches you. No open bidding, no race to the bottom."
+        },
+        "direct": {
+          "title": "You contract directly",
+          "body": "We introduce, then step aside. The contract is between you and the client, on your paper, at your rates."
+        },
+        "market": {
+          "title": "An underserved market",
+          "body": "Georgian companies are actively looking offshore and most of them have never worked with an agency in your country. Being early matters."
+        },
+        "short": {
+          "title": "A short list, deliberately",
+          "body": "We reject most applicants. That is what makes an introduction from us worth taking, and it is why we cannot promise to accept yours."
+        }
+      }
+    },
+    "process": {
+      "title": "What the application involves",
+      "steps": {
+        "apply": {
+          "title": "Apply",
+          "body": "The form below, about ten minutes. We reply within five working days either way."
+        },
+        "verify": {
+          "title": "Verification",
+          "body": "Registration documents, two client references we call ourselves, a live English interview and a security review."
+        },
+        "publish": {
+          "title": "Listing goes live",
+          "body": "We write your profile in Georgian and English, you approve it, and it publishes. Briefs start arriving from the next matching cycle."
+        }
+      }
+    },
+    "requirements": {
+      "title": "What we look for",
+      "items": [
+        "A registered legal entity in India or the Philippines, trading for at least two years",
+        "At least five full-time staff on payroll, not a contractor network",
+        "Two contactable clients who will speak to us on a call",
+        "Working hours with at least four hours of overlap with a Tbilisi business day",
+        "Written English at a professional level across the team that faces clients"
+      ]
+    },
+    "pricing": {
+      "title": "What it costs",
+      "body": "Listing is free during our first year. After that, agencies pay a flat annual fee — never a percentage of your contract, and never a fee that affects where you appear in the directory."
+    },
+    "formTitle": "Apply to be listed",
+    "formSubtitle": "Ten minutes, and a reply within five working days."
+  },
+
+  "howItWorksPage": {
+    "hero": {
+      "eyebrow": "How it works",
+      "title": "From brief to signed contract",
+      "subtitle": "This is the whole process, including the parts that take longer than anyone would like."
+    },
+    "timeline": {
+      "title": "The four-week version",
+      "steps": {
+        "brief": {
+          "week": "Day 1",
+          "title": "You send a brief",
+          "body": "Roles, headcount, budget range, start date and anything unusual about the work. Five minutes. We may come back with two or three clarifying questions."
+        },
+        "match": {
+          "week": "Days 2–5",
+          "title": "We match and shortlist",
+          "body": "We check availability with agencies that fit, confirm they can actually staff your roles at your budget, and send you three to five profiles with indicative rates."
+        },
+        "meet": {
+          "week": "Week 2",
+          "title": "You meet the shortlist",
+          "body": "Calls with the people who would run your account — not a sales team. We sit in if you want a second pair of ears, and we share a written comparison afterwards."
+        },
+        "pilot": {
+          "week": "Week 3",
+          "title": "Pilot or trial period",
+          "body": "Most clients start with a small paid pilot: one or two people, four to six weeks, a clearly defined deliverable. It is the cheapest way to find out whether a team fits."
+        },
+        "sign": {
+          "week": "Week 4",
+          "title": "Contract and onboarding",
+          "body": "You sign directly with the agency. We review the contract terms with you, flag anything unusual, and stay on the onboarding calls for the first month."
+        },
+        "after": {
+          "week": "Ongoing",
+          "title": "Quarterly check-ins",
+          "body": "We check in at 30, 90 and 180 days. If something is not working, we help you fix it or help you move — at no extra cost."
+        }
+      }
+    },
+    "faq": {
+      "title": "Common questions",
+      "items": {
+        "cost": {
+          "question": "What does this cost me as a client?",
+          "answer": "Nothing. There is no fee for a brief, a shortlist or an introduction. Agencies pay an annual listing fee, which is how the business works. We never take a percentage of your contract, because a percentage would give us a reason to push you towards the more expensive team."
+        },
+        "contract": {
+          "question": "Who do I sign a contract with?",
+          "answer": "Directly with the agency. SilkHire is not a party to it. We will read the draft with you and point out terms that commonly cause trouble — notice periods, IP assignment, data processing — but the relationship is yours."
+        },
+        "small": {
+          "question": "We only need one person. Is that too small?",
+          "answer": "No. Several agencies in the directory take engagements starting at one person or 40 hours a month. Say so in the brief and we will shortlist accordingly."
+        },
+        "language": {
+          "question": "Does the team need to speak Georgian?",
+          "answer": "None of them do, and that is worth planning around. Offshore teams work in English, so at least one person on your side needs to be comfortable running the relationship in English. For customer-facing work in Georgian, an offshore team is the wrong tool."
+        },
+        "timezone": {
+          "question": "How much overlap will we actually get?",
+          "answer": "Indian teams typically share about eight hours with a Tbilisi working day, which is close to full overlap. Philippine teams share around five hours, usually your morning and their afternoon. Both work; they just need different meeting habits."
+        },
+        "quality": {
+          "question": "What happens if the team underperforms?",
+          "answer": "Tell us early. We help you raise it with the agency and, if it does not improve, we shortlist replacements at no charge. This is exactly why we recommend starting with a paid pilot rather than a twelve-month commitment."
+        },
+        "data": {
+          "question": "Can we send them customer or financial data?",
+          "answer": "Depends on the agency and the data. Listings show which certifications an agency holds and whether it has passed our security review. For anything involving personal data, you will need a data processing agreement — we can point you at a template."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to start?",
+      "body": "Send a brief and we will come back within five working days.",
+      "button": "Send a brief"
+    }
+  },
+
+  "about": {
+    "hero": {
+      "eyebrow": "About",
+      "title": "A directory built for one market",
+      "subtitle": "SilkHire exists because hiring an offshore team from Georgia is harder than it should be — not because the teams are not there, but because there is no reliable way to tell which ones are real."
+    },
+    "story": {
+      "title": "Why we built it",
+      "body": "Georgian companies have been outsourcing for years — quietly, through personal referrals and lucky guesses. The global freelance marketplaces are built for buyers in London and New York; they assume budgets, contract norms and payment rails that do not match how a company in Tbilisi actually works.\n\nMeanwhile the strongest agencies in India and the Philippines are not on those platforms at all. They grow through referral and they do not bid on public listings. If you are in Georgia, you have no way of reaching them.\n\nSilkHire is the introduction layer. We do the verification once, properly, and reuse it for everyone. Georgian companies get a shortlist they can trust. Agencies get briefs with a real budget attached."
+    },
+    "principles": {
+      "title": "How we operate",
+      "items": {
+        "paid": {
+          "title": "Agencies pay, clients do not",
+          "body": "A flat annual listing fee. No percentage of your contract, no success fee, no referral cut — because any of those would give us a reason to steer you towards the more expensive option."
+        },
+        "ranking": {
+          "title": "Nobody can buy a ranking",
+          "body": "The directory sorts by fit and nothing else. There are no promoted listings, no sponsored placements, and no way to pay to skip a vetting check."
+        },
+        "rejection": {
+          "title": "We say no often",
+          "body": "Most applications are rejected. A directory of everyone is a directory of no one, and the whole value here is that the list is short."
+        },
+        "direct": {
+          "title": "We step out of the way",
+          "body": "You contract directly with the agency. We are not a middleman on the invoice, and we do not mark up anyone's rates."
+        }
+      }
+    },
+    "cta": {
+      "title": "Questions about any of this?",
+      "body": "We would rather answer them before you commit to anything.",
+      "button": "Contact us"
+    }
+  },
+
+  "contact": {
+    "hero": {
+      "eyebrow": "Contact",
+      "title": "Talk to us",
+      "subtitle": "Whether you are hiring, applying to be listed, or just working out whether offshore makes sense for you."
+    },
+    "details": {
+      "title": "Direct contact",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Office",
+      "hours": "Hours",
+      "hoursValue": "Monday to Friday, 10:00–18:00 (Tbilisi time)",
+      "response": "We reply to everything within two working days."
+    },
+    "options": {
+      "title": "What are you here for?",
+      "client": {
+        "title": "I want to hire a team",
+        "body": "Send a brief. It is the fastest route to a shortlist and it costs nothing.",
+        "cta": "Send a brief"
+      },
+      "agency": {
+        "title": "I run an agency",
+        "body": "Apply to be listed. We reply within five working days, whatever the answer.",
+        "cta": "Apply to be listed"
+      },
+      "other": {
+        "title": "Something else",
+        "body": "Press, partnerships, or a question that does not fit either form — email us directly.",
+        "cta": "Email us"
+      }
+    },
+    "formTitle": "Send a brief",
+    "formSubtitle": "Five minutes. No charge, and no obligation to hire anyone."
+  },
+
+  "forms": {
+    "required": "Required",
+    "optional": "Optional",
+    "submit": "Send",
+    "submitting": "Sending…",
+    "errorSummaryTitle": "{count, plural, one {# field needs attention} other {# fields need attention}}",
+    "selectPlaceholder": "Choose one…",
+    "success": {
+      "title": "Thank you — we have got it",
+      "body": "We will come back to you within {days, plural, one {# working day} other {# working days}}. If it is urgent, email {email}.",
+      "again": "Send another"
+    },
+    "failure": {
+      "title": "That did not go through",
+      "body": "Something went wrong on our side. Please try again, or email {email} and we will pick it up from there.",
+      "retry": "Try again"
+    },
+    "clientBrief": {
+      "title": "Client brief",
+      "fields": {
+        "name": "Your name",
+        "company": "Company",
+        "email": "Email",
+        "phone": "Phone",
+        "serviceNeeded": "Service needed",
+        "roles": "Roles you need",
+        "rolesHint": "For example: two support agents and one team lead",
+        "headcount": "Headcount",
+        "headcountHint": "How many people in total",
+        "monthlyBudget": "Monthly budget",
+        "startTimeline": "When do you want to start?",
+        "description": "Describe the work",
+        "descriptionHint": "What the team would do day to day, the tools you use, and anything unusual about the work. The more specific you are, the better the shortlist."
+      },
+      "budgetRanges": {
+        "under-2k": "Under $2,000",
+        "2k-5k": "$2,000–5,000",
+        "5k-10k": "$5,000–10,000",
+        "10k-25k": "$10,000–25,000",
+        "over-25k": "Over $25,000",
+        "not-sure": "Not sure yet"
+      },
+      "startTimelines": {
+        "immediately": "Immediately",
+        "within-1-month": "Within a month",
+        "within-3-months": "Within three months",
+        "exploring": "Just exploring"
+      },
+      "submit": "Send brief"
+    },
+    "agencyApplication": {
+      "title": "Agency application",
+      "sections": {
+        "agency": "About the agency",
+        "capability": "Capability",
+        "evidence": "Evidence"
+      },
+      "fields": {
+        "agencyName": "Agency name",
+        "contactName": "Your name",
+        "email": "Work email",
+        "website": "Website",
+        "country": "Country",
+        "city": "City",
+        "foundedYear": "Year founded",
+        "teamSize": "Full-time staff",
+        "categories": "Services you deliver",
+        "categoriesHint": "Choose everything you deliver in-house",
+        "englishProficiency": "English level across client-facing staff",
+        "hourlyRateMin": "Rate from (USD/hr)",
+        "hourlyRateMax": "Rate to (USD/hr)",
+        "description": "Tell us about the agency",
+        "descriptionHint": "What you do, who you do it for, and what makes an engagement with you go well.",
+        "references": "Client references",
+        "referencesHint": "Two clients we can call, with name, company and email. You can send these later if you need to ask them first."
+      },
+      "submit": "Submit application"
+    },
+    "errors": {
+      "required": "This field is required",
+      "tooLong": "That is too long",
+      "invalidEmail": "Enter a valid email address",
+      "invalidPhone": "Enter a valid phone number",
+      "invalidUrl": "Enter a valid website address",
+      "invalidNumber": "Enter a whole number",
+      "invalidYear": "Enter a valid year",
+      "minHeadcount": "At least one person",
+      "maxHeadcount": "For more than 500 people, email us directly",
+      "tooShortDescription": "Please add a little more detail",
+      "selectAtLeastOne": "Choose at least one",
+      "rateRangeInverted": "The upper rate must be at least the lower rate",
+      "spam": "This submission looks automated",
+      "generic": "Check this field"
+    }
+  },
+
+  "footer": {
+    "tagline": "Vetted outsourcing teams in India and the Philippines, for businesses in Georgia.",
+    "forClients": "For clients",
+    "forAgencies": "For agencies",
+    "company": "Company",
+    "applyToList": "Apply to be listed",
+    "rights": "© {year} SilkHire. All rights reserved.",
+    "registered": "Registered in Tbilisi, Georgia."
+  },
+
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you are looking for does not exist, or has moved.",
+    "cta": "Go to the home page"
+  }
+}
