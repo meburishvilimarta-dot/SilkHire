@@ -6,6 +6,7 @@ import { buildMetadata } from '@/lib/metadata';
 import type { Locale } from '@/i18n/routing';
 import { agencies } from '@/data/agencies';
 import { AgencyDirectory } from '@/components/agencies/AgencyDirectory';
+import { PageHero } from '@/components/ui/PageHero';
 
 type PageProps = { params: Promise<{ locale: Locale }> };
 
@@ -27,19 +28,15 @@ export default async function AgenciesPage({ params }: PageProps) {
 
   const t = await getTranslations({ locale, namespace: 'agencies' });
   const tMeta = await getTranslations({ locale, namespace: 'meta.agencies' });
+  const tNav = await getTranslations({ locale, namespace: 'nav' });
 
   return (
     <>
-      <div className="border-b border-line bg-surface">
-        <div className="container-page py-12 sm:py-16">
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            {t('title')}
-          </h1>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-muted">
-            {tMeta('description')}
-          </p>
-        </div>
-      </div>
+      <PageHero
+        eyebrow={tNav('agencies')}
+        title={t('title')}
+        subtitle={tMeta('description')}
+      />
 
       {/* `useSearchParams` in the directory needs a Suspense boundary so the
           shell around it can still be prerendered. */}
@@ -50,18 +47,29 @@ export default async function AgenciesPage({ params }: PageProps) {
   );
 }
 
+/** Matches the real grid so nothing shifts when the results arrive. */
 function DirectorySkeleton() {
   return (
-    <div className="container-page grid gap-10 py-12 lg:grid-cols-[16rem_1fr] lg:gap-14 lg:py-16">
-      <div className="hidden lg:block">
-        <div className="h-96 animate-pulse rounded-lg bg-surface-sunken" />
+    <div
+      aria-hidden="true"
+      className="container-page grid gap-10 py-14 lg:grid-cols-[17rem_1fr] lg:gap-16 lg:py-20"
+    >
+      <div className="hidden lg:flex lg:flex-col lg:gap-6">
+        {[9, 7, 8, 5, 5].map((rows, index) => (
+          <div key={index} className="space-y-3">
+            <div className="h-2.5 w-20 animate-pulse rounded bg-sunken" />
+            <div
+              className="animate-pulse rounded bg-sunken"
+              style={{ height: `${rows * 0.4}rem` }}
+            />
+          </div>
+        ))}
       </div>
-      <ul className="grid gap-5 xl:grid-cols-2">
+      <ul className="grid gap-6 xl:grid-cols-2">
         {Array.from({ length: 4 }).map((_, index) => (
           <li
             key={index}
-            className="h-64 animate-pulse rounded-lg bg-surface-sunken"
-            aria-hidden="true"
+            className="h-72 animate-pulse rounded-lg bg-surface ring-1 ring-line ring-inset"
           />
         ))}
       </ul>

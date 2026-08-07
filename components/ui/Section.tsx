@@ -1,44 +1,43 @@
 import type { ReactNode } from 'react';
 
-type Tone = 'paper' | 'surface' | 'sunken' | 'brand';
+type Tone = 'paper' | 'surface' | 'sunken' | 'void';
 
 const tones: Record<Tone, string> = {
-  paper: '',
+  paper: 'bg-paper',
   surface: 'bg-surface',
-  sunken: 'bg-surface-sunken',
-  brand: 'bg-brand text-white',
+  sunken: 'bg-sunken',
+  void: 'bg-void text-void-ink on-dark grain',
 };
 
 /**
- * Consistent vertical rhythm between page sections. `labelledBy` should point
- * at the id of the section's own heading so screen readers announce it.
+ * Vertical rhythm for every page section. `labelledBy` should point at the id
+ * of the section's own heading so the landmark is announced by name.
  */
 export function Section({
   tone = 'paper',
   labelledBy,
   id,
   className,
+  bleed = false,
   children,
 }: {
   tone?: Tone;
   labelledBy?: string;
   id?: string;
   className?: string;
+  /** Skip the inner container — for sections that manage their own width. */
+  bleed?: boolean;
   children: ReactNode;
 }) {
   return (
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={[
-        'border-t border-line py-16 first:border-t-0 sm:py-20 lg:py-24',
-        tones[tone],
-        className,
-      ]
+      className={['py-18 sm:py-22 lg:py-28', tones[tone], className]
         .filter(Boolean)
         .join(' ')}
     >
-      <div className="container-page">{children}</div>
+      {bleed ? children : <div className="container-page">{children}</div>}
     </section>
   );
 }

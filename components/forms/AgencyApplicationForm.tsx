@@ -11,7 +11,7 @@ import {
   type AgencyApplicationValues,
 } from '@/lib/schemas/agencyApplication';
 import { countries, englishLevels, serviceCategories } from '@/data/taxonomies';
-import { Button } from '@/components/ui/Button';
+import { Button, ButtonArrow } from '@/components/ui/Button';
 import { TextField } from './fields/TextField';
 import { TextareaField } from './fields/TextareaField';
 import { SelectField } from './fields/SelectField';
@@ -21,6 +21,7 @@ import {
   FormError,
   FormSuccess,
   Honeypot,
+  SubmitSpinner,
   type SubmitState,
 } from './FormStatus';
 
@@ -28,11 +29,12 @@ const REPLY_DAYS = 5;
 
 function Fieldset({ legend, children }: { legend: string; children: React.ReactNode }) {
   return (
-    <fieldset className="border-t border-line pt-8 first:border-t-0 first:pt-0">
-      <legend className="mb-6 text-xs font-semibold tracking-[0.12em] text-accent uppercase">
+    <fieldset className="border-t border-line pt-10 first:border-t-0 first:pt-0">
+      <legend className="eyebrow flex items-center gap-3 text-accent">
+        <span aria-hidden="true" className="h-px w-6 bg-accent/40" />
         {legend}
       </legend>
-      <div className="space-y-6">{children}</div>
+      <div className="mt-7 space-y-7">{children}</div>
     </fieldset>
   );
 }
@@ -89,7 +91,7 @@ export function AgencyApplicationForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative space-y-8">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative space-y-10">
       {status === 'error' ? <FormError /> : null}
       <ErrorSummary count={Object.keys(errors).length} />
 
@@ -233,9 +235,19 @@ export function AgencyApplicationForm() {
 
       <Honeypot name="agency-application" registration={register('fax')} />
 
-      <div className="pt-2">
+      <div className="border-t border-line pt-8">
         <Button type="submit" size="lg" disabled={status === 'submitting'}>
-          {status === 'submitting' ? tForms('submitting') : t('submit')}
+          {status === 'submitting' ? (
+            <>
+              <SubmitSpinner />
+              {tForms('submitting')}
+            </>
+          ) : (
+            <>
+              {t('submit')}
+              <ButtonArrow />
+            </>
+          )}
         </Button>
       </div>
     </form>

@@ -18,6 +18,9 @@ interface SelectFieldProps extends Omit<ComponentProps<'select'>, 'id' | 'classN
   options: readonly SelectOption[];
 }
 
+const chevron =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%237e8983' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E\")";
+
 export function SelectField({
   label,
   hint,
@@ -43,12 +46,14 @@ export function SelectField({
         id={id}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy(id, hint, error)}
-        // `defaultValue=""` on the form keeps this placeholder selected until
-        // the user picks something, so zod sees an empty value and complains.
-        className={`${controlClasses} ${ringFor(error)} appearance-none bg-[length:1rem] bg-[right_0.75rem_center] bg-no-repeat pr-9`}
+        // The form sets `defaultValue: ''`, so this placeholder stays selected
+        // until the user picks something and zod sees an empty value.
+        className={`${controlClasses} ${ringFor(error)} appearance-none pr-10`}
         style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%235a6068' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E\")",
+          backgroundImage: chevron,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'right 0.875rem center',
+          backgroundSize: '1rem',
         }}
         {...selectProps}
       >

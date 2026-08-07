@@ -1,28 +1,47 @@
 import { siteConfig } from '@/data/site';
 
 /**
- * Typographic wordmark with a single drawn mark — two threads meeting, for
- * the two ends of the route. Decorative, so it is hidden from assistive tech;
- * the name beside it carries the meaning.
+ * The route, reduced to a mark: two endpoints joined by an arc, with the
+ * meeting point called out. Decorative — the name beside it carries meaning.
  */
-export function Wordmark({ className }: { className?: string }) {
+export function RouteMark({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 28 28"
+      fill="none"
+      className={className ?? 'h-7 w-7'}
+    >
+      <path
+        d="M3 21C8.5 21 8.5 7 14 7s5.5 14 11 14"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        className="opacity-90"
+      />
+      <circle cx="14" cy="7" r="2.6" fill="currentColor" />
+      <circle cx="3" cy="21" r="1.5" fill="currentColor" className="opacity-45" />
+      <circle cx="25" cy="21" r="1.5" fill="currentColor" className="opacity-45" />
+    </svg>
+  );
+}
+
+export function Wordmark({
+  className,
+  tone = 'dark',
+}: {
+  className?: string;
+  /** `dark` means "sitting on a dark ground". */
+  tone?: 'dark' | 'light';
+}) {
   return (
     <span className={['flex items-center gap-2.5', className].filter(Boolean).join(' ')}>
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        fill="none"
-        className="h-6 w-6 shrink-0 text-brand"
-      >
-        <path
-          d="M3 18c4.5 0 4.5-12 9-12s4.5 12 9 12"
-          stroke="currentColor"
-          strokeWidth="1.9"
-          strokeLinecap="round"
-        />
-        <circle cx="12" cy="6" r="2.1" fill="currentColor" />
-      </svg>
-      <span className="text-[1.0625rem] font-semibold tracking-tight">
+      <RouteMark
+        className={`h-7 w-7 shrink-0 transition-colors duration-300 ${
+          tone === 'dark' ? 'text-accent' : 'text-brand'
+        }`}
+      />
+      <span className="text-display text-[1.1875rem] font-semibold tracking-[-0.01em]">
         {siteConfig.name}
       </span>
     </span>

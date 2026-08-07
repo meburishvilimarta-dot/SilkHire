@@ -1,43 +1,110 @@
 @import 'tailwindcss';
 
 /**
- * Restrained palette: warm paper background, near-black ink, one deep
- * evergreen for actions and one ochre accent used sparingly. Nothing here
- * is a gradient and nothing glows.
+ * SilkHire design system.
+ *
+ * One idea carries the whole site: a drawn route. It is the logo mark, the
+ * hero graphic, the timeline spine, the step connector and the section rule.
+ * Everything else stays quiet so that line reads.
+ *
+ * Two colours and a neutral ramp. Deep evergreen for structure and action,
+ * ochre for emphasis, warm paper underneath. No third hue, anywhere.
  */
 @theme {
-  --color-paper: #fbfaf8;
+  /* Light ground */
+  --color-paper: #fbf9f5;
   --color-surface: #ffffff;
-  --color-surface-sunken: #f4f2ee;
+  --color-sunken: #f3f0e9;
 
-  --color-ink: #16181a;
-  --color-ink-muted: #5a6068;
-  --color-ink-subtle: #83898f;
+  --color-ink: #0c1411;
+  --color-ink-muted: #55605b;
+  --color-ink-subtle: #7e8983;
 
-  --color-line: #e4e1da;
-  --color-line-strong: #cfcbc1;
+  --color-line: #e6e1d7;
+  --color-line-strong: #cfc8b9;
 
-  --color-brand: #14453d;
-  --color-brand-hover: #0e332d;
-  --color-brand-soft: #e8efec;
-  --color-brand-ink: #0b241f;
+  /* Dark ground — header, footer, hero, CTA panels */
+  --color-void: #0a100e;
+  --color-void-raised: #121b18;
+  --color-void-line: #1f2c27;
+  --color-void-ink: #f4f1ea;
+  --color-void-muted: #97a59f;
 
-  --color-accent: #a9662a;
-  --color-accent-soft: #f6eee4;
+  /* Brand */
+  --color-brand: #0e5344;
+  --color-brand-deep: #0a3d32;
+  --color-brand-bright: #17836a;
+  --color-brand-soft: #e3efea;
+  --color-accent: #c0803a;
+  --color-accent-bright: #e0a45c;
+  --color-accent-soft: #f8f0e3;
 
-  --color-danger: #97331f;
+  --color-danger: #9c3520;
   --color-danger-soft: #fbeeea;
-  --color-success: #1f6b46;
-  --color-success-soft: #e9f3ed;
+  --color-success: #1c6b47;
+  --color-success-soft: #e8f3ed;
 
-  --font-sans: var(--font-noto-georgian), 'Noto Sans Georgian', 'Segoe UI', system-ui,
-    -apple-system, sans-serif;
+  /* Editorial serif for display, matching sans for everything else. Both
+     cover Mkhedruli, so Georgian and English share one set of metrics. */
+  --font-display: var(--font-serif-georgian), Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-sans-georgian), 'Segoe UI', system-ui, -apple-system, sans-serif;
 
-  /* Tightened tracking on the big sizes; Mkhedruli has no capitals to carry
-     a headline, so size and weight do the work instead. */
-  --text-display: 3.25rem;
-  --text-display--line-height: 1.08;
-  --text-display--letter-spacing: -0.02em;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-draw: draw 2.4s var(--ease-out-soft) forwards;
+  --animate-travel: travel 4.5s linear infinite;
+  --animate-pulse-ring: pulse-ring 3.2s var(--ease-out-soft) infinite;
+  --animate-drift: drift 9s ease-in-out infinite alternate;
+}
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: var(--draw-length, 600);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes travel {
+  from {
+    stroke-dashoffset: var(--travel-length, 600);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, -6px, 0);
+  }
+  to {
+    transform: translate3d(0, 6px, 0);
+  }
 }
 
 @layer base {
@@ -46,58 +113,158 @@
     -webkit-text-size-adjust: 100%;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
-
   body {
     background-color: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: 'case' 1;
     -webkit-font-smoothing: antialiased;
-  }
-
-  /* One focus treatment everywhere, always visible — never `outline: none`. */
-  :focus-visible {
-    outline: 2px solid var(--color-brand);
-    outline-offset: 2px;
-    border-radius: 2px;
+    text-rendering: optimizeLegibility;
   }
 
   h1,
   h2,
-  h3,
-  h4 {
+  h3 {
+    font-family: var(--font-display);
     text-wrap: balance;
+    letter-spacing: -0.015em;
   }
 
   p {
     text-wrap: pretty;
   }
 
+  /* One focus treatment site-wide. Never removed, only re-coloured on dark. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-bright);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: var(--color-accent-bright);
+  }
+
   ::selection {
-    background-color: var(--color-brand-soft);
-    color: var(--color-brand-ink);
+    background-color: var(--color-brand);
+    color: var(--color-void-ink);
+  }
+}
+
+@layer components {
+  /**
+   * Scroll reveal. Hidden state applies only under `.js`, which an inline
+   * script in the layout sets — so with JavaScript off, every section renders
+   * visible rather than blank.
+   */
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+    transition:
+      opacity 0.7s var(--ease-out-soft),
+      transform 0.7s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .js [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Reveals resolve instantly rather than being disabled, so content that
+     depends on them is never left invisible. */
+  .js [data-reveal],
+  .js [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 @utility container-page {
   margin-inline: auto;
   width: 100%;
-  max-width: 76rem;
+  max-width: 78rem;
   padding-inline: 1.25rem;
 
   @media (width >= 48rem) {
     padding-inline: 2rem;
   }
+
+  @media (width >= 80rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/** Hairline rule that fades at both ends — the route line, at rest. */
+@utility rule-fade {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-line-strong) 15%,
+    var(--color-line-strong) 85%,
+    transparent
+  );
+}
+
+@utility rule-fade-dark {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-void-line) 15%,
+    var(--color-void-line) 85%,
+    transparent
+  );
+}
+
+/** Very fine paper grain. Pure CSS, no image request. */
+@utility grain {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: radial-gradient(currentColor 0.5px, transparent 0.5px);
+    background-size: 4px 4px;
+  }
+}
+
+/** Display type: the serif, at section-heading scale and above. */
+@utility text-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/** The small uppercase label that opens every section. */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }

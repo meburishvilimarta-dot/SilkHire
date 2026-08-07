@@ -7,6 +7,10 @@ import type { Locale } from '@/i18n/routing';
 import { PageHero } from '@/components/ui/PageHero';
 import { Section } from '@/components/ui/Section';
 import { SectionHeading } from '@/components/ui/SectionHeading';
+import { Card } from '@/components/ui/Card';
+import { Reveal } from '@/components/ui/Reveal';
+import { CheckMark } from '@/components/ui/Badge';
+import { ButtonLink, ButtonArrow } from '@/components/ui/Button';
 import { AgencyApplicationForm } from '@/components/forms/AgencyApplicationForm';
 
 type PageProps = { params: Promise<{ locale: Locale }> };
@@ -35,6 +39,7 @@ export default async function ForAgenciesPage({ params }: PageProps) {
 
 function ForAgenciesContent() {
   const t = useTranslations('forAgencies');
+  const tCommon = useTranslations('common');
   // `requirements.items` is a JSON array in the message file rather than a
   // numbered set of keys, so it comes back through `t.raw`.
   const requirements = t.raw('requirements.items') as string[];
@@ -45,97 +50,120 @@ function ForAgenciesContent() {
         eyebrow={t('hero.eyebrow')}
         title={t('hero.title')}
         subtitle={t('hero.subtitle')}
-      />
+      >
+        <ButtonLink href="#apply" variant="inverse" size="lg">
+          {tCommon('listAgency')}
+          <ButtonArrow />
+        </ButtonLink>
+      </PageHero>
 
       <Section labelledBy="why-title">
         <SectionHeading title={t('why.title')} id="why-title" />
-        <ul className="mt-10 grid gap-5 sm:grid-cols-2">
-          {reasons.map((reason) => (
-            <li
-              key={reason}
-              className="rounded-lg bg-surface p-7 ring-1 ring-line ring-inset"
-            >
-              <h3 className="text-base font-semibold tracking-tight">
-                {t(`why.items.${reason}.title`)}
-              </h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-ink-muted">
-                {t(`why.items.${reason}.body`)}
-              </p>
-            </li>
+
+        <ul className="mt-14 grid gap-6 sm:grid-cols-2">
+          {reasons.map((reason, index) => (
+            <Reveal as="li" key={reason} delay={index * 80}>
+              <Card interactive className="h-full p-8">
+                <span
+                  aria-hidden="true"
+                  className="eyebrow block text-accent tabular-nums"
+                >
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <h3 className="text-display mt-4 text-[1.5rem]">
+                  {t(`why.items.${reason}.title`)}
+                </h3>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">
+                  {t(`why.items.${reason}.body`)}
+                </p>
+              </Card>
+            </Reveal>
           ))}
         </ul>
       </Section>
 
       <Section tone="surface" labelledBy="process-title">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div>
             <SectionHeading title={t('process.title')} id="process-title" />
-            <ol className="mt-8 space-y-6">
+
+            <ol className="relative mt-10">
+              <span
+                aria-hidden="true"
+                className="absolute top-4 bottom-10 left-[15px] w-px bg-line-strong"
+              />
               {processSteps.map((step, index) => (
-                <li key={step} className="flex gap-5">
+                <Reveal
+                  as="li"
+                  key={step}
+                  delay={index * 80}
+                  className="relative flex gap-6 pb-9 last:pb-0"
+                >
                   <span
                     aria-hidden="true"
-                    className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-soft text-xs font-semibold text-brand-ink tabular-nums"
+                    className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-xs font-semibold text-void-ink tabular-nums"
                   >
                     {index + 1}
                   </span>
-                  <div>
-                    <h3 className="text-base font-semibold tracking-tight">
+                  <div className="pt-1">
+                    <h3 className="text-display text-xl">
                       {t(`process.steps.${step}.title`)}
                     </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-muted">
                       {t(`process.steps.${step}.body`)}
                     </p>
                   </div>
-                </li>
+                </Reveal>
               ))}
             </ol>
           </div>
 
           <div>
-            <h2 className="text-2xl font-semibold tracking-tight">
-              {t('requirements.title')}
-            </h2>
-            <ul className="mt-6 space-y-3">
-              {requirements.map((requirement) => (
-                <li key={requirement} className="flex gap-3 text-sm leading-relaxed">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="mt-1 h-4 w-4 shrink-0 text-brand"
-                  >
-                    <path d="m3.5 8.5 3 3 6-7" />
-                  </svg>
+            <Reveal>
+              <h2 className="text-display text-[1.75rem] sm:text-[2rem]">
+                {t('requirements.title')}
+              </h2>
+            </Reveal>
+
+            <ul className="mt-7 space-y-4">
+              {requirements.map((requirement, index) => (
+                <Reveal
+                  as="li"
+                  key={requirement}
+                  delay={index * 60}
+                  className="flex gap-4 border-b border-line pb-4 text-[0.9375rem] leading-relaxed"
+                >
+                  <CheckMark className="mt-1.5 h-3.5 w-3.5 shrink-0 text-brand" />
                   <span className="text-ink-muted">{requirement}</span>
-                </li>
+                </Reveal>
               ))}
             </ul>
 
-            <div className="mt-8 rounded-lg bg-surface-sunken p-6">
-              <h3 className="text-sm font-semibold">{t('pricing.title')}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-                {t('pricing.body')}
-              </p>
-            </div>
+            <Reveal delay={140}>
+              <div className="mt-10 border-l-2 border-accent/40 bg-accent-soft/50 px-6 py-5">
+                <h3 className="eyebrow text-accent">{t('pricing.title')}</h3>
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">
+                  {t('pricing.body')}
+                </p>
+              </div>
+            </Reveal>
           </div>
         </div>
       </Section>
 
-      <Section id="apply" labelledBy="apply-title">
+      <Section id="apply" labelledBy="apply-title" className="scroll-mt-24">
         <div className="mx-auto max-w-3xl">
           <SectionHeading
             title={t('formTitle')}
             subtitle={t('formSubtitle')}
             id="apply-title"
+            align="center"
           />
-          <div className="mt-10">
-            <AgencyApplicationForm />
-          </div>
+          <Reveal delay={120} className="mt-14">
+            <div className="rounded-xl bg-surface p-7 ring-1 ring-line ring-inset sm:p-10">
+              <AgencyApplicationForm />
+            </div>
+          </Reveal>
         </div>
       </Section>
     </>

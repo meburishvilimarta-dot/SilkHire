@@ -13,7 +13,7 @@ import {
   type ClientBriefValues,
 } from '@/lib/schemas/clientBrief';
 import { serviceCategories } from '@/data/taxonomies';
-import { Button } from '@/components/ui/Button';
+import { Button, ButtonArrow } from '@/components/ui/Button';
 import { TextField } from './fields/TextField';
 import { TextareaField } from './fields/TextareaField';
 import { SelectField } from './fields/SelectField';
@@ -22,6 +22,7 @@ import {
   FormError,
   FormSuccess,
   Honeypot,
+  SubmitSpinner,
   type SubmitState,
 } from './FormStatus';
 
@@ -81,7 +82,7 @@ export function ClientBriefForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative space-y-7">
       {status === 'error' ? <FormError /> : null}
       <ErrorSummary count={Object.keys(errors).length} />
 
@@ -189,9 +190,19 @@ export function ClientBriefForm() {
 
       <Honeypot name="client-brief" registration={register('website')} />
 
-      <div className="flex items-center gap-4 pt-2">
+      <div className="flex items-center gap-4 border-t border-line pt-8">
         <Button type="submit" size="lg" disabled={status === 'submitting'}>
-          {status === 'submitting' ? tForms('submitting') : t('submit')}
+          {status === 'submitting' ? (
+            <>
+              <SubmitSpinner />
+              {tForms('submitting')}
+            </>
+          ) : (
+            <>
+              {t('submit')}
+              <ButtonArrow />
+            </>
+          )}
         </Button>
       </div>
     </form>

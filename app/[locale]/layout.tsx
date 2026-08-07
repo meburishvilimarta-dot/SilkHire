@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Noto_Sans_Georgian } from 'next/font/google';
+import { Noto_Sans_Georgian, Noto_Serif_Georgian } from 'next/font/google';
 
 import { routing, type Locale } from '@/i18n/routing';
 import { siteConfig } from '@/data/site';
@@ -11,15 +11,25 @@ import { Footer } from '@/components/layout/Footer';
 import '../globals.css';
 
 /**
- * One family for headings and body. Noto Sans Georgian covers Mkhedruli
- * properly and ships a matching Latin, so Georgian and English pages have
- * identical metrics instead of a fallback jumping in mid-sentence.
+ * An editorial serif for display, its matching sans for everything else.
+ *
+ * The pairing is deliberately from the same superfamily: both cut Mkhedruli
+ * properly *and* ship a matching Latin, so a Georgian page and an English one
+ * share the same metrics. A fashionable Latin-only pairing would fall back to
+ * a system font on every Georgian heading — which is most of the site.
  */
-const notoSansGeorgian = Noto_Sans_Georgian({
+const serifGeorgian = Noto_Serif_Georgian({
   subsets: ['georgian', 'latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['500', '600', '700'],
   display: 'swap',
-  variable: '--font-noto-georgian',
+  variable: '--font-serif-georgian',
+});
+
+const sansGeorgian = Noto_Sans_Georgian({
+  subsets: ['georgian', 'latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+  variable: '--font-sans-georgian',
 });
 
 export function generateStaticParams() {
@@ -27,7 +37,7 @@ export function generateStaticParams() {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#fbfaf8',
+  themeColor: '#0a100e',
 };
 
 export async function generateMetadata({
@@ -67,12 +77,24 @@ export default async function LocaleLayout({
   const t = await getTranslations({ locale, namespace: 'nav' });
 
   return (
-    <html lang={locale} className={notoSansGeorgian.variable}>
-      <body className="flex min-h-dvh flex-col antialiased">
+    <html lang={locale} className={`${serifGeorgian.variable} ${sansGeorgian.variable}`}>
+      <head>
+        {/*
+          Marks the document as scripted before first paint. Scroll-reveal
+          hides elements only under `.js`, so with JavaScript off every
+          section renders visible instead of blank.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
+      </head>
+      <body className="flex min-h-dvh flex-col">
         <NextIntlClientProvider>
           <a
             href="#main"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-brand focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-void"
           >
             {t('skipToContent')}
           </a>
