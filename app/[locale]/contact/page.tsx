@@ -79,17 +79,15 @@ function ContactContent() {
 
             return (
               <Reveal as="li" key={option.key} delay={index * 80}>
-                <Card interactive className="flex h-full flex-col p-8">
-                  <h3 className="text-display text-[1.375rem]">
-                    {t(`options.${option.key}.title`)}
-                  </h3>
-                  <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink-muted">
+                <Card interactive className="flex h-full flex-col p-7 sm:p-8">
+                  <h3 className="text-title-3">{t(`options.${option.key}.title`)}</h3>
+                  <p className="text-callout mt-3 flex-1 text-label-secondary">
                     {t(`options.${option.key}.body`)}
                   </p>
                   {isExternal ? (
                     <a
                       href={option.href}
-                      className="mt-7 inline-flex items-center gap-2 border-t border-line pt-5 text-sm font-medium text-brand"
+                      className="text-subheadline mt-7 inline-flex min-h-11 items-center gap-2 border-t border-separator pt-5 font-medium text-accent"
                     >
                       {label}
                       <Chevron />
@@ -97,7 +95,7 @@ function ContactContent() {
                   ) : (
                     <Link
                       href={option.href}
-                      className="mt-7 inline-flex items-center gap-2 border-t border-line pt-5 text-sm font-medium text-brand"
+                      className="text-subheadline mt-7 inline-flex min-h-11 items-center gap-2 border-t border-separator pt-5 font-medium text-accent"
                     >
                       {label}
                       <Chevron />
@@ -110,7 +108,7 @@ function ContactContent() {
         </ul>
       </Section>
 
-      <Section tone="surface" id="brief" labelledBy="brief-title" className="scroll-mt-24">
+      <Section tone="secondary" id="brief" labelledBy="brief-title" className="scroll-mt-24">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-20">
           <div className="min-w-0">
             <SectionHeading
@@ -124,17 +122,17 @@ function ContactContent() {
           </div>
 
           <aside className="lg:sticky lg:top-28 lg:self-start">
-            <div className="rounded-lg bg-sunken p-7">
-              <h2 className="eyebrow text-ink-subtle">{t('details.title')}</h2>
-              <dl className="mt-5 space-y-5 text-sm">
+            <div className="rounded-lg border border-separator bg-bg p-6">
+              <h2 className="text-caption text-label-tertiary">{t('details.title')}</h2>
+              <dl className="text-subheadline mt-4 space-y-4">
                 {details.map((detail) => (
                   <div key={detail.label}>
-                    <dt className="text-xs text-ink-subtle">{detail.label}</dt>
-                    <dd className="mt-1 font-medium">
+                    <dt className="text-footnote text-label-tertiary">{detail.label}</dt>
+                    <dd className="mt-0.5 font-medium">
                       {detail.href ? (
                         <a
                           href={detail.href}
-                          className="border-b border-ink/20 pb-0.5 transition-colors hover:border-brand hover:text-brand"
+                          className="inline-flex min-h-11 items-center text-accent transition-opacity duration-[--duration-fast] hover:opacity-70"
                         >
                           {detail.value}
                         </a>
@@ -145,7 +143,7 @@ function ContactContent() {
                   </div>
                 ))}
               </dl>
-              <p className="mt-7 border-t border-line-strong/60 pt-5 text-xs leading-relaxed text-ink-subtle">
+              <p className="text-footnote mt-6 border-t border-separator pt-5 text-label-tertiary">
                 {t('details.response')}
               </p>
             </div>
@@ -163,12 +161,12 @@ function Chevron() {
       viewBox="0 0 16 16"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.75"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="h-3.5 w-3.5 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1"
+      className="h-3.5 w-3.5 transition-transform duration-[--duration-fast] ease-[--ease-standard] group-hover:translate-x-0.5"
     >
-      <path d="M2.5 8h11m-4.5-4.5L13.5 8 9 12.5" />
+      <path d="m6 3.5 4.5 4.5L6 12.5" />
     </svg>
   );
 }

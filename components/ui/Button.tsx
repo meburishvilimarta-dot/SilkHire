@@ -1,44 +1,44 @@
 import type { ComponentProps, ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
 
-type Variant = 'primary' | 'secondary' | 'inverse' | 'quiet' | 'ghost';
-type Size = 'sm' | 'md' | 'lg';
-
 /**
- * Buttons are squared off to 6px, never pill-shaped, and lift by one pixel on
- * hover — the whole interaction vocabulary is small and consistent.
+ * Buttons are capsules, per the HIG's preference for rounded shapes, and never
+ * shorter than 44px — the platform minimum hit target.
+ *
+ * Only `filled` carries the accent colour. The HIG asks for one or two
+ * prominent buttons per view and for the preferred option to be distinguished
+ * by *style*, not size, so every variant here shares the same geometry and
+ * differs only in fill.
  */
-const base =
-  'group/btn relative inline-flex items-center justify-center gap-2 rounded-md font-medium ' +
-  'transition-[background-color,color,box-shadow,transform,border-color] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] ' +
-  'hover:-translate-y-px active:translate-y-0 disabled:pointer-events-none disabled:opacity-55';
+type Variant = 'filled' | 'tinted' | 'bordered' | 'plain';
+type Size = 'md' | 'lg';
+
+const base = [
+  'group/btn inline-flex items-center justify-center gap-2 rounded-full font-medium',
+  'transition-[background-color,color,border-color,transform,opacity]',
+  'duration-[--duration-fast] ease-[--ease-standard]',
+  'active:scale-[0.97] disabled:pointer-events-none disabled:opacity-40',
+].join(' ');
 
 const variants: Record<Variant, string> = {
-  primary:
-    'bg-brand text-void-ink shadow-[0_1px_2px_rgba(10,16,14,0.16)] hover:bg-brand-deep hover:shadow-[0_6px_20px_-6px_rgba(14,83,68,0.5)]',
-  secondary:
-    'bg-transparent text-ink ring-1 ring-line-strong ring-inset hover:bg-surface hover:ring-ink/25 hover:shadow-[0_6px_20px_-10px_rgba(12,20,17,0.4)]',
-  inverse:
-    'bg-paper text-ink hover:bg-white hover:shadow-[0_8px_28px_-8px_rgba(0,0,0,0.55)]',
-  quiet:
-    'bg-transparent text-void-ink ring-1 ring-void-ink/25 ring-inset hover:bg-void-ink/8 hover:ring-void-ink/45',
-  ghost:
-    'text-brand underline decoration-brand/30 underline-offset-[6px] hover:decoration-brand hover:-translate-y-0',
+  filled: 'bg-accent text-on-accent hover:bg-accent-hover',
+  tinted: 'bg-accent-muted text-accent hover:bg-accent/20',
+  bordered:
+    'border border-separator-opaque text-label hover:bg-fill hover:border-label-quaternary',
+  plain: 'text-accent hover:bg-accent-muted',
 };
 
+/* min-h keeps the 44px floor even when the label is a single short word. */
 const sizes: Record<Size, string> = {
-  sm: 'px-3.5 py-2 text-[0.8125rem]',
-  md: 'px-5 py-2.5 text-sm',
-  lg: 'px-7 py-3.5 text-[0.9375rem]',
+  md: 'min-h-11 px-5 py-2.5 text-callout',
+  lg: 'min-h-[3.25rem] px-7 py-3.5 text-body',
 };
 
 function classesFor(variant: Variant, size: Size, className?: string) {
-  return [base, variants[variant], variant === 'ghost' ? '' : sizes[size], className]
-    .filter(Boolean)
-    .join(' ');
+  return [base, variants[variant], sizes[size], className].filter(Boolean).join(' ');
 }
 
-/** The arrow that slides on hover. Decorative — the label carries the meaning. */
+/** Trailing chevron that nudges on hover. Decorative — the label carries meaning. */
 export function ButtonArrow() {
   return (
     <svg
@@ -46,12 +46,12 @@ export function ButtonArrow() {
       viewBox="0 0 16 16"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.75"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="h-3.5 w-3.5 transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/btn:translate-x-1"
+      className="h-3.5 w-3.5 transition-transform duration-[--duration-fast] ease-[--ease-standard] group-hover/btn:translate-x-0.5"
     >
-      <path d="M2.5 8h11m-4.5-4.5L13.5 8 9 12.5" />
+      <path d="m6 3.5 4.5 4.5L6 12.5" />
     </svg>
   );
 }
@@ -65,7 +65,7 @@ interface ButtonLinkProps extends Omit<ComponentProps<typeof Link>, 'className'>
 
 /** Renders an anchor. Navigation only — never an action. */
 export function ButtonLink({
-  variant = 'primary',
+  variant = 'filled',
   size = 'md',
   className,
   children,
@@ -84,7 +84,7 @@ interface ButtonProps extends ComponentProps<'button'> {
 }
 
 export function Button({
-  variant = 'primary',
+  variant = 'filled',
   size = 'md',
   className,
   type = 'button',

@@ -178,52 +178,26 @@ returns `{ ok: true }` and discards the submission, so a bot learns nothing.
 
 ## Design system
 
-One idea carries the whole site: **a drawn route**. It is the logo mark, the
-hero graphic, the timeline spine, the step connector, the section rule and the
-empty/404 illustrations. Everything else stays quiet so that line reads.
+Built on the principles in Apple's Human Interface Guidelines — semantic colour
+with light/dark/increased-contrast values, named text styles, materials confined
+to the functional layer, capsule controls at a 44px minimum, and brief motion.
+Tokens and utilities live in `app/globals.css`; primitives in `components/ui/`.
 
-- **Frame.** Dark header, dark footer, warm paper between. Page mastheads are
-  dark too, so every page is framed identically and the home hero flows out of
-  the header with no seam. `Section tone="void"` marks the deliberate dark
-  beats mid-page (the cost table, closing CTAs).
-- **Colour.** Two hues and a neutral ramp, all in `@theme` in `globals.css`:
-  evergreen (`--color-brand`) for structure and action, ochre
-  (`--color-accent`) for emphasis, never a third. Dark surfaces have their own
-  ramp (`--color-void*`).
-- **Type.** `Noto_Serif_Georgian` for display, `Noto_Sans_Georgian` for UI —
-  the `text-display` and `eyebrow` utilities. They are from one superfamily
-  deliberately: both cut Mkhedruli *and* ship a matching Latin, so Georgian and
-  English share metrics. A fashionable Latin-only pairing would fall back to a
-  system font on every Georgian heading, which is most of the site.
-- **Primitives.** `components/ui/` — `Button` (5 variants), `Card`, `Badge`,
-  `Section`, `SectionHeading`, `PageHero`, `CtaBanner`, `Reveal`.
+**Read `docs/DESIGN-SYSTEM.md` before changing any visual code.** It carries the
+measured contrast ratios, the type scale, the material fallbacks, and a list of
+gotchas that cost real time (`@theme` cannot nest inside `@media`; implicit grid
+tracks cannot shrink; `backdrop-filter` must be written unprefixed).
 
-### Motion
+Three rules that matter most day to day:
 
-No animation library. Scroll entrances come from `components/ui/Reveal.tsx`, a
-~40-line `IntersectionObserver` wrapper that unobserves each element once it
-appears. Everything else is CSS keyframes; the hero's route arcs animate via
-`pathLength="1"` so the dash maths is exact regardless of curve length.
-
-Two rules when adding motion:
-
-1. **The hidden state lives in CSS under `.js`**, set by an inline script in
-   the layout. With JavaScript off, every section renders visible rather than
-   blank. Never hide content in React state that only a scroll can undo.
-2. **Reduced motion resolves, it does not disable.** The media query in
-   `globals.css` sets reveals to their *end* state and clamps durations. Use
-   `animation: … both` on keyframe entrances so they also land on the end
-   state rather than never running.
-
-### A gotcha worth knowing
-
-Passing `hidden sm:inline-flex` *into* a component whose own base classes set
-`inline-flex` is a coin-flip — which display utility wins depends on
-stylesheet order, not the order in the attribute. Wrap the component in a
-`<div className="hidden sm:block">` instead. The same applies to custom
-checkboxes: keep the `<input>` **inside** its visible label rather than beside
-it as a `peer`, or the visually-hidden input ends up positioned away from the
-control and the hit target goes with it.
+1. **Never hard-code a colour or a size.** Use a semantic token
+   (`text-label-secondary`, `bg-bg-secondary`, `border-separator`) and a named
+   text style (`text-title-2`, `text-callout`). If you are reaching for
+   `text-[0.9375rem]`, the scale is missing a step — add it there, not inline.
+2. **Every colour must work in both appearances.** The site follows the system
+   setting and has no in-page theme switch. Check dark before you ship.
+3. **44px minimum on anything pointable.** The only exceptions are inline links
+   inside a sentence and the off-screen honeypot.
 
 ## i18n
 
@@ -231,9 +205,9 @@ control and the hit target goes with it.
 - `i18n/navigation.ts` — **always import `Link` from here**, not from
   `next/link`, or hrefs lose their locale prefix.
 - `messages/{locale}.json` — both files must have identical key structure.
-- Georgian renders in **Noto Sans Georgian** (loaded via `next/font/google` in
-  `app/[locale]/layout.tsx`), which covers Mkhedruli properly and ships a
-  matching Latin so both languages share the same metrics.
+- Georgian renders in **SF Georgian** on Apple devices via the system font
+  stack, and in **Noto Sans Georgian** (loaded via `next/font/google`)
+  everywhere else. See `docs/DESIGN-SYSTEM.md` for why SF is not self-hosted.
 
 Georgian runs roughly two to three times longer than the equivalent English.
 When you add a component, check the Georgian rendering at 390px before calling

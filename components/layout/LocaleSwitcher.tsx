@@ -6,9 +6,12 @@ import { usePathname, useRouter } from '@/i18n/navigation';
 import { locales, type Locale } from '@/i18n/routing';
 
 /**
- * Two buttons rather than a dropdown — there are only ever two locales, and a
- * radio group announces the current language without opening anything. The
- * active pill slides between them.
+ * A segmented control: two options, both visible, with the selection sliding
+ * between them. Only two locales exist, so a dropdown would hide half the
+ * choice behind a tap.
+ *
+ * Each segment is a real radio, so the control announces itself as a group and
+ * works from the keyboard without any extra handling.
  */
 export function LocaleSwitcher({ className }: { className?: string }) {
   const t = useTranslations('localeSwitcher');
@@ -34,7 +37,7 @@ export function LocaleSwitcher({ className }: { className?: string }) {
       role="radiogroup"
       aria-label={t('label')}
       className={[
-        'relative inline-flex rounded-md p-0.5 ring-1 ring-void-ink/15 ring-inset transition-opacity',
+        'relative inline-flex rounded-full bg-fill p-0.5 transition-opacity',
         isPending ? 'opacity-60' : '',
         className,
       ]
@@ -43,7 +46,7 @@ export function LocaleSwitcher({ className }: { className?: string }) {
     >
       <span
         aria-hidden="true"
-        className="absolute inset-y-0.5 left-0.5 w-[calc(50%-0.125rem)] rounded-[5px] bg-void-ink/12 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+        className="absolute inset-y-0.5 left-0.5 w-[calc(50%-0.125rem)] rounded-full bg-bg shadow-raised transition-transform duration-[--duration-medium] ease-[--ease-emphasized]"
         style={{ transform: `translateX(${activeIndex * 100}%)` }}
       />
       {locales.map((locale) => {
@@ -56,8 +59,8 @@ export function LocaleSwitcher({ className }: { className?: string }) {
             aria-checked={isActive}
             lang={locale}
             onClick={() => switchTo(locale)}
-            className={`relative z-10 min-w-11 rounded-[5px] px-2.5 py-1 text-[0.6875rem] font-semibold tracking-wide transition-colors duration-200 ${
-              isActive ? 'text-void-ink' : 'text-void-muted hover:text-void-ink'
+            className={`text-caption relative z-10 min-h-11 min-w-12 rounded-full px-3 transition-colors duration-[--duration-fast] ${
+              isActive ? 'text-label' : 'text-label-secondary hover:text-label'
             }`}
           >
             <span aria-hidden="true">{t(locale === 'ka' ? 'kaShort' : 'enShort')}</span>

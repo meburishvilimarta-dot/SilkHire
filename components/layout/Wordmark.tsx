@@ -10,40 +10,24 @@ export function RouteMark({ className }: { className?: string }) {
       aria-hidden="true"
       viewBox="0 0 28 28"
       fill="none"
-      className={className ?? 'h-7 w-7'}
+      className={className ?? 'h-6 w-6'}
     >
       <path
         d="M3 21C8.5 21 8.5 7 14 7s5.5 14 11 14"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.25"
         strokeLinecap="round"
-        className="opacity-90"
       />
-      <circle cx="14" cy="7" r="2.6" fill="currentColor" />
-      <circle cx="3" cy="21" r="1.5" fill="currentColor" className="opacity-45" />
-      <circle cx="25" cy="21" r="1.5" fill="currentColor" className="opacity-45" />
+      <circle cx="14" cy="7" r="2.75" fill="currentColor" />
     </svg>
   );
 }
 
-export function Wordmark({
-  className,
-  tone = 'dark',
-}: {
-  className?: string;
-  /** `dark` means "sitting on a dark ground". */
-  tone?: 'dark' | 'light';
-}) {
+export function Wordmark({ className }: { className?: string }) {
   return (
-    <span className={['flex items-center gap-2.5', className].filter(Boolean).join(' ')}>
-      <RouteMark
-        className={`h-7 w-7 shrink-0 transition-colors duration-300 ${
-          tone === 'dark' ? 'text-accent' : 'text-brand'
-        }`}
-      />
-      <span className="text-display text-[1.1875rem] font-semibold tracking-[-0.01em]">
-        {siteConfig.name}
-      </span>
+    <span className={['flex items-center gap-2', className].filter(Boolean).join(' ')}>
+      <RouteMark className="h-6 w-6 shrink-0 text-accent" />
+      <span className="text-headline tracking-[-0.02em]">{siteConfig.name}</span>
     </span>
   );
 }

@@ -1,20 +1,21 @@
 import type { ReactNode } from 'react';
 
-type Tone = 'paper' | 'surface' | 'sunken' | 'void';
+/**
+ * Vertical rhythm for page sections.
+ *
+ * `tone` names the background's depth in the hierarchy, not its colour, so the
+ * same component reads correctly in both appearances: `base` is the page,
+ * `secondary` is a step up from it.
+ */
+type Tone = 'base' | 'secondary';
 
 const tones: Record<Tone, string> = {
-  paper: 'bg-paper',
-  surface: 'bg-surface',
-  sunken: 'bg-sunken',
-  void: 'bg-void text-void-ink on-dark grain',
+  base: 'bg-bg',
+  secondary: 'bg-bg-secondary',
 };
 
-/**
- * Vertical rhythm for every page section. `labelledBy` should point at the id
- * of the section's own heading so the landmark is announced by name.
- */
 export function Section({
-  tone = 'paper',
+  tone = 'base',
   labelledBy,
   id,
   className,
@@ -33,7 +34,7 @@ export function Section({
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={['py-18 sm:py-22 lg:py-28', tones[tone], className]
+      className={['py-20 sm:py-24 lg:py-28', tones[tone], className]
         .filter(Boolean)
         .join(' ')}
     >

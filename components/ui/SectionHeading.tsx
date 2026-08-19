@@ -7,13 +7,16 @@ interface SectionHeadingProps {
   subtitle?: ReactNode;
   as?: 'h1' | 'h2';
   align?: 'left' | 'center';
-  tone?: 'light' | 'dark';
   id?: string;
 }
 
 /**
- * Every section opens the same way: a ruled ochre eyebrow, a serif headline,
- * then supporting text at a comfortably shorter measure than the headline.
+ * Every section opens the same way: an accent overline, a title, then
+ * supporting text at a comfortable measure.
+ *
+ * Each of the three uses a named text style rather than assembling a size and
+ * a weight at the call site, so the hierarchy is identical everywhere it
+ * appears and scales as one when the viewport changes.
  */
 export function SectionHeading({
   eyebrow,
@@ -21,49 +24,35 @@ export function SectionHeading({
   subtitle,
   as: Tag = 'h2',
   align = 'left',
-  tone = 'light',
   id,
 }: SectionHeadingProps) {
-  const isCentered = align === 'center';
-  const isDark = tone === 'dark';
+  const centered = align === 'center';
 
   return (
-    <div className={isCentered ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl'}>
+    <div className={centered ? 'mx-auto text-center' : ''}>
       {eyebrow ? (
         <Reveal>
-          <p
-            className={`eyebrow flex items-center gap-3 ${
-              isCentered ? 'justify-center' : ''
-            } ${isDark ? 'text-accent-bright' : 'text-accent'}`}
-          >
-            <span
-              aria-hidden="true"
-              className={`h-px w-7 ${isDark ? 'bg-accent-bright/45' : 'bg-accent/40'}`}
-            />
-            {eyebrow}
-          </p>
+          <p className="text-overline text-accent">{eyebrow}</p>
         </Reveal>
       ) : null}
 
-      <Reveal delay={eyebrow ? 70 : 0}>
+      <Reveal delay={eyebrow ? 60 : 0}>
         <Tag
           id={id}
-          className={`text-display mt-5 ${
-            Tag === 'h1'
-              ? 'text-[2.5rem] sm:text-6xl lg:text-[4.25rem]'
-              : 'text-[2rem] sm:text-[2.75rem] lg:text-[3.25rem]'
-          }`}
+          className={`${Tag === 'h1' ? 'text-display' : 'text-title-1'} ${
+            eyebrow ? 'mt-4' : ''
+          } measure-wide ${centered ? 'mx-auto' : ''}`}
         >
           {title}
         </Tag>
       </Reveal>
 
       {subtitle ? (
-        <Reveal delay={140}>
+        <Reveal delay={120}>
           <p
-            className={`mt-6 max-w-2xl text-[1.0625rem] leading-[1.75] sm:text-lg ${
-              isCentered ? 'mx-auto' : ''
-            } ${isDark ? 'text-void-muted' : 'text-ink-muted'}`}
+            className={`text-body-lead measure-wide mt-5 text-label-secondary ${
+              centered ? 'mx-auto' : ''
+            }`}
           >
             {subtitle}
           </p>

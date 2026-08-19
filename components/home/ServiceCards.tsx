@@ -35,53 +35,55 @@ export function ServiceCards() {
         id="services-title"
       />
 
-      <ul className="mt-16 grid gap-6 sm:grid-cols-2">
+      <ul className="mt-14 grid gap-5 sm:grid-cols-2">
         {serviceCategories.map((category, index) => {
           const count = agencies.filter((agency) =>
             agency.categories.includes(category),
           ).length;
 
           return (
-            <Reveal as="li" key={category} delay={index * 90}>
-              <Card as="div" interactive className="h-full">
+            <Reveal as="li" key={category} delay={index * 70}>
+              <Card interactive className="h-full">
                 <Link
                   href={{ pathname: '/agencies', query: { category } }}
-                  className="flex h-full flex-col p-8 lg:p-10"
+                  className="flex h-full flex-col rounded-lg p-7 sm:p-8"
                 >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-soft text-brand transition-colors duration-300 group-hover:bg-brand group-hover:text-void-ink">
+                  {/* Inner radius steps down from the card's 20px by the 28px
+                      of padding around it, so the corners stay concentric. */}
+                  <span className="flex h-11 w-11 items-center justify-center rounded-sm bg-accent-muted text-accent">
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth="1.4"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="h-6 w-6"
+                      className="h-5.5 w-5.5"
                     >
                       {icons[category]}
                     </svg>
                   </span>
 
-                  <h3 className="text-display mt-7 text-2xl">{tCategories(category)}</h3>
-                  <p className="mt-3 flex-1 text-[0.9375rem] leading-relaxed text-ink-muted">
+                  <h3 className="text-title-3 mt-6">{tCategories(category)}</h3>
+                  <p className="text-callout mt-2.5 flex-1 text-label-secondary">
                     {tDescriptions(category)}
                   </p>
 
-                  <span className="mt-8 inline-flex items-center gap-2 border-t border-line pt-5 text-sm font-medium text-brand">
+                  <span className="text-subheadline mt-7 inline-flex items-center gap-1.5 font-medium text-accent">
                     {t('cta')}
-                    <span className="text-ink-subtle tabular-nums">({count})</span>
+                    <span className="tabular-nums opacity-60">({count})</span>
                     <svg
                       aria-hidden="true"
                       viewBox="0 0 16 16"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth="1.7"
+                      strokeWidth="1.75"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="h-3.5 w-3.5 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1"
+                      className="h-3.5 w-3.5 transition-transform duration-[--duration-fast] ease-[--ease-standard] group-hover:translate-x-0.5"
                     >
-                      <path d="M2.5 8h11m-4.5-4.5L13.5 8 9 12.5" />
+                      <path d="m6 3.5 4.5 4.5L6 12.5" />
                     </svg>
                   </span>
                 </Link>

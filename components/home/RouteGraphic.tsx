@@ -9,6 +9,9 @@ import type { CostCountry } from '@/data/cost-comparison';
  * it is CSS on an inline SVG — no canvas, no animation library, no image
  * request — and `pathLength="1"` normalises every path so the dash maths is
  * exact regardless of the actual curve length.
+ *
+ * Every stroke uses a semantic colour token, so the drawing re-tones itself in
+ * dark mode instead of needing a second copy.
  */
 
 interface Node {
@@ -37,12 +40,6 @@ export function RouteGraphic() {
 
   return (
     <div className="relative aspect-square w-full">
-      {/* Depth behind the drawing: a soft brand glow, off-centre. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 rounded-full bg-[radial-gradient(60%_60%_at_35%_35%,rgba(23,131,106,0.28),transparent_70%)] blur-2xl"
-      />
-
       <svg
         viewBox="0 0 400 400"
         fill="none"
@@ -59,8 +56,8 @@ export function RouteGraphic() {
             stroke="currentColor"
             strokeWidth="1"
             strokeDasharray="2 7"
-            className="text-void-ink"
-            opacity={0.26 - index * 0.05}
+            className="text-label-quaternary"
+            opacity={0.9 - index * 0.18}
           />
         ))}
 
@@ -71,8 +68,8 @@ export function RouteGraphic() {
             d={`M-20 ${y}Q200 ${y - 34} 420 ${y}`}
             stroke="currentColor"
             strokeWidth="1"
-            className="text-void-ink"
-            opacity="0.11"
+            className="text-label-quaternary"
+            opacity="0.35"
           />
         ))}
 
@@ -85,7 +82,7 @@ export function RouteGraphic() {
               stroke="currentColor"
               strokeWidth="1.5"
               strokeLinecap="round"
-              className="animate-draw text-void-ink/45"
+              className="animate-draw text-label-quaternary"
               style={
                 {
                   '--draw-length': 1,
@@ -101,7 +98,7 @@ export function RouteGraphic() {
               stroke="currentColor"
               strokeWidth="2.5"
               strokeLinecap="round"
-              className="animate-travel text-accent-bright"
+              className="animate-travel text-accent"
               style={
                 {
                   '--travel-length': 1,
@@ -137,14 +134,14 @@ export function RouteGraphic() {
             <span
               className={`relative h-2.5 w-2.5 rounded-full ring-4 ${
                 node.origin
-                  ? 'bg-accent ring-accent/15'
-                  : 'bg-void-ink ring-void-ink/10'
+                  ? 'bg-accent ring-accent-muted'
+                  : 'bg-label-tertiary ring-fill'
               }`}
             />
           </span>
           <span
-            className={`text-[0.6875rem] font-medium tracking-wide whitespace-nowrap ${
-              node.origin ? 'text-void-ink' : 'text-void-muted'
+            className={`text-caption whitespace-nowrap ${
+              node.origin ? 'text-label' : 'text-label-secondary'
             }`}
           >
             {tCountries(node.id)}

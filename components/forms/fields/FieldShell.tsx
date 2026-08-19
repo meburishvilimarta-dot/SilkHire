@@ -27,17 +27,17 @@ export function FieldShell({
     <div className="group/field">
       <label
         htmlFor={id}
-        className="flex items-baseline justify-between gap-3 text-[0.8125rem] font-medium text-ink"
+        className="text-subheadline flex items-baseline justify-between gap-3 font-medium text-label"
       >
         {label}
         {optional ? (
-          <span className="text-[0.6875rem] font-normal text-ink-subtle">
+          <span className="text-caption font-normal text-label-tertiary">
             {optionalLabel}
           </span>
         ) : null}
       </label>
       {hint ? (
-        <p id={`${id}-hint`} className="mt-1.5 text-xs leading-relaxed text-ink-subtle">
+        <p id={`${id}-hint`} className="text-footnote mt-1.5 text-label-tertiary">
           {hint}
         </p>
       ) : null}
@@ -45,7 +45,7 @@ export function FieldShell({
       {error ? (
         <p
           id={`${id}-error`}
-          className="mt-2 flex items-center gap-1.5 text-xs font-medium text-danger"
+          className="text-footnote mt-2 flex items-center gap-1.5 font-medium text-critical"
         >
           <svg
             aria-hidden="true"
@@ -75,14 +75,17 @@ export function describedBy(id: string, hint?: string, error?: string) {
 }
 
 /**
- * Inputs sit on the sunken tone and lift to white on focus — the field you are
- * typing in is the only lit surface on the form.
+ * Fields are rounded rectangles on the page background with a hairline border,
+ * 44px tall at minimum. The border darkens on focus rather than the fill
+ * changing, so the field does not appear to move as you tab through the form.
  */
 export const controlClasses =
-  'w-full rounded-md bg-sunken/60 px-3.5 py-3 text-sm text-ink ring-1 ring-inset ' +
-  'transition-[background-color,box-shadow,color] duration-200 placeholder:text-ink-subtle ' +
-  'hover:bg-sunken focus:bg-surface focus:ring-2';
+  'text-body min-h-11 w-full rounded-sm border bg-bg px-3.5 py-3 text-label ' +
+  'transition-[border-color,background-color] duration-[--duration-fast] ' +
+  'placeholder:text-label-quaternary hover:bg-fill focus:bg-bg';
 
 export function ringFor(error?: string) {
-  return error ? 'ring-danger/60 focus:ring-danger' : 'ring-line focus:ring-brand';
+  return error
+    ? 'border-critical focus:border-critical'
+    : 'border-separator-opaque focus:border-accent';
 }

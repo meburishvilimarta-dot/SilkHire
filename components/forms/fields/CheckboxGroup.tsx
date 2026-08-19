@@ -41,9 +41,9 @@ export function CheckboxGroup({
 
   return (
     <fieldset aria-describedby={describedBy}>
-      <legend className="text-[0.8125rem] font-medium text-ink">{legend}</legend>
+      <legend className="text-subheadline font-medium text-label">{legend}</legend>
       {hint ? (
-        <p id={`${uid}-hint`} className="mt-1.5 text-xs text-ink-subtle">
+        <p id={`${uid}-hint`} className="text-footnote mt-1.5 text-label-tertiary">
           {hint}
         </p>
       ) : null}
@@ -55,7 +55,7 @@ export function CheckboxGroup({
           // `has-[:checked]` styles the tile and its tick box together.
           <label
             key={option.value}
-            className="relative flex cursor-pointer items-center gap-3 rounded-md bg-sunken/60 px-3.5 py-3 text-sm text-ink-muted ring-1 ring-line ring-inset transition-all duration-200 select-none hover:bg-sunken has-[:checked]:bg-brand-soft has-[:checked]:text-brand-deep has-[:checked]:ring-brand/30 has-[:checked]:[&_span]:bg-brand has-[:checked]:[&_span]:text-void-ink has-[:checked]:[&_span]:ring-brand has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-bright"
+            className="text-subheadline relative flex min-h-11 cursor-pointer items-center gap-3 rounded-sm border border-separator-opaque bg-bg px-3.5 py-3 text-label-secondary transition-colors duration-[--duration-fast] select-none hover:bg-fill has-[:checked]:border-accent has-[:checked]:bg-accent-muted has-[:checked]:text-label has-[:checked]:[&_span]:border-accent has-[:checked]:[&_span]:bg-accent has-[:checked]:[&_span]:text-on-accent has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"
           >
             <input
               id={`${uid}-${option.value}`}
@@ -67,7 +67,7 @@ export function CheckboxGroup({
             />
             <span
               aria-hidden="true"
-              className="flex h-4 w-4 shrink-0 items-center justify-center rounded-[4px] bg-surface text-transparent ring-1 ring-line-strong ring-inset transition-colors"
+              className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-separator-opaque bg-bg text-transparent transition-colors"
             >
               <CheckMark className="h-2.5 w-2.5" />
             </span>
@@ -77,7 +77,7 @@ export function CheckboxGroup({
       </div>
 
       {error ? (
-        <p id={`${uid}-error`} className="mt-2.5 text-xs font-medium text-danger">
+        <p id={`${uid}-error`} className="text-footnote mt-2.5 font-medium text-critical">
           {error}
         </p>
       ) : null}

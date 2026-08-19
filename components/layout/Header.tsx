@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { LocaleSwitcher } from './LocaleSwitcher';
-import { ButtonLink, ButtonArrow } from '@/components/ui/Button';
+import { ButtonLink } from '@/components/ui/Button';
 import { Wordmark } from './Wordmark';
 
 const navItems = [
@@ -15,9 +15,14 @@ const navItems = [
 ] as const;
 
 /**
- * The header is dark on every page. It frames the site consistently, flows
- * straight into the dark hero on the home page, and gives the light pages a
- * firm top edge instead of floating.
+ * The navigation bar is the site's functional layer: it floats above the
+ * content on a translucent material so what is scrolling underneath stays
+ * partly visible, which is what keeps a sense of place.
+ *
+ * The material only appears once the page has scrolled — at rest the bar sits
+ * flush on the page with no seam. `material-bar` handles the fallbacks for
+ * reduced transparency, increased contrast and browsers without
+ * `backdrop-filter`.
  */
 export function Header() {
   const t = useTranslations('nav');
@@ -33,7 +38,7 @@ export function Header() {
 
   useEffect(() => {
     function onScroll() {
-      setScrolled(window.scrollY > 12);
+      setScrolled(window.scrollY > 8);
     }
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -45,7 +50,7 @@ export function Header() {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') setIsOpen(false);
     }
-    // Lock the page behind the mobile panel so it does not scroll underneath.
+    // Lock the page behind the panel so it does not scroll underneath.
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', onKeyDown);
@@ -59,23 +64,20 @@ export function Header() {
     return pathname === href || pathname.startsWith(`${href}/`);
   }
 
+  const showMaterial = isScrolled || isOpen;
+
   return (
     <header
-      className={`on-dark sticky top-0 z-50 bg-void text-void-ink transition-shadow duration-300 ${
-        isScrolled ? 'shadow-[0_1px_0_var(--color-void-line),0_12px_32px_-24px_rgba(0,0,0,0.9)]' : ''
+      className={`sticky top-0 z-50 transition-[background-color,box-shadow] duration-[--duration-medium] ease-[--ease-standard] ${
+        showMaterial ? 'material-bar hairline-bottom' : 'bg-bg'
       }`}
     >
       <div className="container-page">
-        <div
-          // Fixed 4rem on mobile: the overlay below is offset by exactly that,
-          // and a height that changed on scroll would leave a gap or a clip.
-          className={`flex h-16 items-center justify-between gap-6 transition-[height] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isScrolled ? 'lg:h-16' : 'lg:h-[5.25rem]'
-          }`}
-        >
+        {/* Fixed 56px on mobile: the overlay below is offset by exactly that. */}
+        <div className="flex h-14 items-center justify-between gap-6 lg:h-16">
           <Link
             href="/"
-            className="shrink-0 rounded-sm transition-opacity duration-200 hover:opacity-85"
+            className="-mx-2 flex h-11 shrink-0 items-center rounded-full px-2 transition-opacity duration-[--duration-fast] hover:opacity-70"
           >
             <Wordmark />
           </Link>
@@ -89,19 +91,13 @@ export function Header() {
                     <Link
                       href={item.href}
                       aria-current={current ? 'page' : undefined}
-                      className={`group relative block px-3.5 py-2 text-[0.875rem] transition-colors duration-200 ${
-                        current ? 'text-void-ink' : 'text-void-muted hover:text-void-ink'
+                      className={`text-subheadline flex h-11 items-center rounded-full px-3.5 transition-colors duration-[--duration-fast] ${
+                        current
+                          ? 'font-medium text-label'
+                          : 'text-label-secondary hover:text-label'
                       }`}
                     >
                       {t(item.key)}
-                      {/* Underline grows from the centre on hover, and stays
-                          put on the current page. */}
-                      <span
-                        aria-hidden="true"
-                        className={`absolute inset-x-3.5 bottom-1 h-px origin-center bg-accent transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                          current ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                        }`}
-                      />
                     </Link>
                   </li>
                 );
@@ -109,19 +105,15 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            {/* Wrapped rather than given `hidden sm:inline-flex` directly:
-                both components set `inline-flex` in their own base classes, and
-                which of the two display utilities wins depends on stylesheet
-                order, not on the order they appear in the attribute. */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Wrapped rather than given `hidden sm:inline-flex` directly: both
+                components set a display in their own base classes, and which
+                utility wins depends on stylesheet order, not attribute order. */}
             <div className="hidden sm:block">
               <LocaleSwitcher />
             </div>
             <div className="hidden sm:block">
-              <ButtonLink href="/contact" variant="inverse">
-                {tCommon('findTeam')}
-                <ButtonArrow />
-              </ButtonLink>
+              <ButtonLink href="/contact">{tCommon('findTeam')}</ButtonLink>
             </div>
 
             <button
@@ -129,20 +121,19 @@ export function Header() {
               onClick={() => setIsOpen((open) => !open)}
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
-              className="relative inline-flex h-10 w-10 items-center justify-center rounded-md ring-1 ring-void-ink/15 ring-inset transition-colors hover:bg-void-ink/8 lg:hidden"
+              className="-mr-2 inline-flex h-11 w-11 items-center justify-center rounded-full text-label transition-colors duration-[--duration-fast] hover:bg-fill lg:hidden"
             >
               <span className="sr-only">{isOpen ? t('closeMenu') : t('openMenu')}</span>
-              {/* Two bars that cross into an X — cheaper and calmer than
-                  swapping icons. */}
-              <span aria-hidden="true" className="relative block h-3 w-4.5">
+              {/* Two bars that cross into an X. */}
+              <span aria-hidden="true" className="relative block h-2.5 w-4">
                 <span
-                  className={`absolute inset-x-0 top-0 h-px bg-current transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isOpen ? 'translate-y-1.5 rotate-45' : ''
+                  className={`absolute inset-x-0 top-0 h-0.5 rounded-full bg-current transition-transform duration-[--duration-medium] ease-[--ease-emphasized] ${
+                    isOpen ? 'translate-y-1 rotate-45' : ''
                   }`}
                 />
                 <span
-                  className={`absolute inset-x-0 bottom-0 h-px bg-current transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isOpen ? '-translate-y-1.5 -rotate-45' : ''
+                  className={`absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-current transition-transform duration-[--duration-medium] ease-[--ease-emphasized] ${
+                    isOpen ? '-translate-y-1 -rotate-45' : ''
                   }`}
                 />
               </span>
@@ -151,36 +142,34 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile panel. Rendered only when open so its links stay out of the
-          tab order the rest of the time. */}
+      {/* Rendered only when open, so its links stay out of the tab order the
+          rest of the time. Opaque rather than material: it covers the page
+          entirely, so there is nothing behind it worth showing through. */}
       {isOpen ? (
         <div
           id="mobile-menu"
-          className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-void-line bg-void lg:hidden"
+          className="fixed inset-x-0 top-14 bottom-0 z-40 overflow-y-auto bg-bg lg:hidden"
         >
-          <nav aria-label={t('primary')} className="container-page py-6">
+          <nav aria-label={t('primary')} className="container-page py-4">
             <ul className="flex flex-col">
               {[...navItems, { key: 'contact', href: '/contact' } as const].map(
                 (item, index) => (
                   <li
                     key={item.key}
-                    // `both` fill means reduced-motion users, whose animation
-                    // duration is clamped to ~0, still land on the end state.
+                    // `both` fill keeps the end state for reduced-motion users,
+                    // whose animation duration is clamped to near zero.
                     style={{
-                      animation: `rise-in 0.45s var(--ease-out-soft) ${index * 45}ms both`,
+                      animation: `rise-in var(--duration-medium) var(--ease-emphasized) ${index * 35}ms both`,
                     }}
-                    className="border-b border-void-line/70"
+                    className="border-b border-separator"
                   >
                     <Link
                       href={item.href}
                       aria-current={isCurrent(item.href) ? 'page' : undefined}
-                      className={`text-display flex items-baseline gap-3 py-4 text-2xl transition-colors ${
-                        isCurrent(item.href) ? 'text-void-ink' : 'text-void-muted'
+                      className={`text-title-3 flex min-h-14 items-center transition-colors ${
+                        isCurrent(item.href) ? 'text-label' : 'text-label-secondary'
                       }`}
                     >
-                      <span aria-hidden="true" className="eyebrow text-accent/70">
-                        0{index + 1}
-                      </span>
                       {t(item.key)}
                     </Link>
                   </li>
@@ -188,10 +177,9 @@ export function Header() {
               )}
             </ul>
 
-            <div className="mt-8 flex flex-col gap-4">
-              <ButtonLink href="/contact" variant="inverse" size="lg" className="w-full">
+            <div className="mt-8 flex flex-col items-start gap-5">
+              <ButtonLink href="/contact" size="lg" className="w-full">
                 {tCommon('findTeam')}
-                <ButtonArrow />
               </ButtonLink>
               <div className="sm:hidden">
                 <LocaleSwitcher />

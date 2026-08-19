@@ -33,17 +33,17 @@ function toggle<T>(list: T[], value: T): T[] {
 
 function FieldGroup({ legend, children }: { legend: string; children: React.ReactNode }) {
   return (
-    <fieldset className="border-t border-line pt-6 pb-6 first:border-t-0 first:pt-0">
-      <legend className="eyebrow mb-4 text-ink-subtle">{legend}</legend>
+    <fieldset className="border-t border-separator pt-6 pb-6 first:border-t-0 first:pt-0">
+      <legend className="text-caption mb-4 text-label-tertiary">{legend}</legend>
       {children}
     </fieldset>
   );
 }
 
 /**
- * Multi-select filters are checkboxes styled as chips: a real `<input>` under
- * a label, so keyboard and screen-reader behaviour is the browser's, with the
- * checked state carried by `peer-checked` styling rather than JavaScript.
+ * Multi-select filters are capsule chips wrapping a real checkbox, so keyboard
+ * and screen-reader behaviour is the browser's and the selected state is
+ * carried by `has-[:checked]` rather than by JavaScript.
  */
 function Chip({
   id,
@@ -57,11 +57,11 @@ function Chip({
   onChange: () => void;
 }) {
   return (
-    // The input lives *inside* its label rather than beside it as a `peer`.
-    // A visually-hidden sibling gets positioned away from the chip, which
-    // leaves its hit box somewhere the pointer never goes; nested, the whole
-    // chip is the target and the checkbox stays a real focusable control.
-    <label className="relative cursor-pointer rounded-md px-3 py-1.5 text-[0.8125rem] text-ink-muted ring-1 ring-line ring-inset transition-all duration-200 select-none hover:ring-line-strong has-[:checked]:bg-brand has-[:checked]:text-void-ink has-[:checked]:ring-brand has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-bright">
+    // The input lives *inside* its label rather than beside it as a `peer`: a
+    // visually-hidden sibling gets positioned away from the chip, leaving its
+    // hit box somewhere the pointer never goes. Nested, the whole capsule is
+    // the target, and `min-h-11` keeps it at the 44px minimum.
+    <label className="text-subheadline relative flex min-h-11 cursor-pointer items-center rounded-full bg-fill px-4 text-label-secondary transition-colors duration-[--duration-fast] select-none hover:bg-fill-secondary has-[:checked]:bg-accent has-[:checked]:text-on-accent has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent">
       <input
         id={id}
         type="checkbox"
@@ -75,10 +75,10 @@ function Chip({
 }
 
 const selectClasses =
-  'w-full appearance-none rounded-md bg-surface px-3.5 py-2.5 pr-9 text-sm text-ink ring-1 ring-line ring-inset transition-colors hover:ring-line-strong focus:ring-brand';
+  'text-subheadline min-h-11 w-full appearance-none rounded-sm border border-separator bg-bg px-3.5 pr-9 text-label transition-colors duration-[--duration-fast] hover:bg-fill';
 
 const chevron =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%237e8983' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E\")";
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%238e8e93' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E\")";
 
 export function AgencyFilters({ state, onChange }: AgencyFiltersProps) {
   const t = useTranslations('agencies.filters');
@@ -96,12 +96,12 @@ export function AgencyFilters({ state, onChange }: AgencyFiltersProps) {
       {/* Hidden below lg: on mobile the disclosure button above already says
           "Filters", and a "Clear all" sits next to the result count. */}
       <div className="hidden items-center justify-between gap-3 pb-5 lg:flex">
-        <h2 className="text-display text-lg">{t('heading')}</h2>
+        <h2 className="text-headline">{t('heading')}</h2>
         {activeCount > 0 ? (
           <button
             type="button"
             onClick={() => onChange(emptyFilterState)}
-            className="rounded-sm text-xs font-medium text-brand underline decoration-brand/30 underline-offset-4 transition-colors hover:decoration-brand"
+            className="text-footnote rounded-full px-2 py-1 text-accent transition-opacity duration-[--duration-fast] hover:opacity-70"
           >
             {t('clear')}
           </button>

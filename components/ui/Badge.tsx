@@ -1,13 +1,17 @@
 import type { ReactNode } from 'react';
 
-type Tone = 'neutral' | 'brand' | 'accent' | 'outline' | 'dark';
+/**
+ * Small status pill. Every tone pairs its colour with either a glyph or a
+ * distinct label, because the HIG asks that colour never be the only carrier
+ * of meaning.
+ */
+type Tone = 'neutral' | 'accent' | 'positive' | 'outline';
 
 const tones: Record<Tone, string> = {
-  neutral: 'bg-sunken text-ink-muted ring-line',
-  brand: 'bg-brand-soft text-brand-deep ring-brand/15',
-  accent: 'bg-accent-soft text-accent ring-accent/20',
-  outline: 'bg-transparent text-ink-subtle ring-line-strong',
-  dark: 'bg-void-ink/8 text-void-ink ring-void-ink/15',
+  neutral: 'bg-fill text-label-secondary',
+  accent: 'bg-accent-muted text-accent',
+  positive: 'bg-positive-muted text-positive',
+  outline: 'border border-separator text-label-tertiary',
 };
 
 export function Badge({
@@ -19,14 +23,14 @@ export function Badge({
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-[5px] px-2.5 py-1 text-[0.6875rem] font-medium tracking-[0.02em] whitespace-nowrap ring-1 ring-inset ${tones[tone]}`}
+      className={`text-caption inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 whitespace-nowrap ${tones[tone]}`}
     >
       {children}
     </span>
   );
 }
 
-/** Small check used inside vetted badges and specialty lists. */
+/** Check glyph used in vetted badges and specialty lists. */
 export function CheckMark({ className }: { className?: string }) {
   return (
     <svg
@@ -34,7 +38,7 @@ export function CheckMark({ className }: { className?: string }) {
       viewBox="0 0 12 12"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.9"
+      strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className ?? 'h-3 w-3'}

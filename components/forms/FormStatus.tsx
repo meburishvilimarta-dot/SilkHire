@@ -23,17 +23,17 @@ export function FormSuccess({
   return (
     <div
       role="status"
-      style={{ animation: 'rise-in 0.6s var(--ease-out-soft) both' }}
-      className="rounded-lg bg-surface p-9 text-center ring-1 ring-line ring-inset sm:p-12"
+      style={{ animation: 'rise-in var(--duration-slow) var(--ease-emphasized) both' }}
+      className="rounded-lg border border-separator bg-bg-secondary p-9 text-center sm:p-12"
     >
-      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-brand">
+      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-positive-muted text-positive">
         <CheckMark className="h-6 w-6" />
       </span>
-      <h3 className="text-display mt-6 text-2xl">{t('title')}</h3>
-      <p className="mx-auto mt-3 max-w-md text-[0.9375rem] leading-relaxed text-ink-muted">
+      <h3 className="text-title-2 mt-6">{t('title')}</h3>
+      <p className="text-callout measure mx-auto mt-3 text-label-secondary">
         {t('body', { days: replyDays, email: siteConfig.contactEmail })}
       </p>
-      <Button variant="secondary" onClick={onReset} className="mt-7">
+      <Button variant="bordered" onClick={onReset} className="mt-7">
         {t('again')}
       </Button>
     </div>
@@ -47,10 +47,10 @@ export function FormError() {
   return (
     <div
       role="alert"
-      className="rounded-md border-l-2 border-danger bg-danger-soft px-5 py-4"
+      className="rounded-sm border border-critical/30 bg-critical-muted px-5 py-4"
     >
-      <h3 className="text-sm font-semibold text-danger">{t('title')}</h3>
-      <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+      <h3 className="text-headline text-critical">{t('title')}</h3>
+      <p className="text-subheadline mt-1.5 text-label-secondary">
         {t('body', { email: siteConfig.contactEmail })}
       </p>
     </div>
@@ -68,7 +68,7 @@ export function ErrorSummary({ count }: { count: number }) {
   return (
     <p
       role="alert"
-      className="rounded-md border-l-2 border-danger bg-danger-soft px-5 py-3.5 text-sm font-medium text-danger"
+      className="text-subheadline rounded-sm border border-critical/30 bg-critical-muted px-5 py-3.5 font-medium text-critical"
     >
       {t('errorSummaryTitle', { count })}
     </p>

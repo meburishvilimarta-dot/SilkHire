@@ -31,27 +31,26 @@ export default async function OpengraphImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          backgroundColor: '#0a100e',
-          color: '#f4f1ea',
+          backgroundColor: '#ffffff',
+          color: '#1d1d1f',
           padding: 80,
           fontFamily: 'Noto Sans Georgian',
-          // The route, arcing across the card behind the words.
-          backgroundImage:
-            "radial-gradient(70% 80% at 82% 10%, rgba(23,131,106,0.30), transparent 62%)",
-          borderTop: '10px solid #c0803a',
+          // A single accent hairline along the top edge — the card is
+          // otherwise the same white ground as the site.
+          borderTop: '8px solid #0a6e52',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <svg width="44" height="44" viewBox="0 0 24 24" fill="none">
             <path
               d="M3 18c4.5 0 4.5-12 9-12s4.5 12 9 12"
-              stroke="#c0803a"
+              stroke="#0a6e52"
               strokeWidth="1.9"
               strokeLinecap="round"
             />
-            <circle cx="12" cy="6" r="2.1" fill="#c0803a" />
+            <circle cx="12" cy="6" r="2.1" fill="#0a6e52" />
           </svg>
-          <span style={{ fontSize: 36, fontWeight: 600, color: '#f4f1ea' }}>
+          <span style={{ fontSize: 36, fontWeight: 600, color: '#1d1d1f' }}>
             {siteConfig.name}
           </span>
         </div>
@@ -61,19 +60,19 @@ export default async function OpengraphImage() {
             style={{
               fontSize: 56,
               fontWeight: 600,
-              color: '#f4f1ea',
+              color: '#1d1d1f',
               letterSpacing: '-0.02em',
               lineHeight: 1.15,
             }}
           >
             გადამოწმებული აუტსორსინგ გუნდები ინდოეთსა და ფილიპინებში
           </span>
-          <span style={{ fontSize: 32, color: '#97a59f', lineHeight: 1.35 }}>
+          <span style={{ fontSize: 32, color: '#5c5c62', lineHeight: 1.35 }}>
             Vetted outsourcing teams in India and the Philippines
           </span>
         </div>
 
-        <span style={{ fontSize: 24, color: '#e0a45c', letterSpacing: '0.08em' }}>
+        <span style={{ fontSize: 24, color: '#0a6e52', letterSpacing: '0.06em' }}>
           {siteConfig.url.replace(/^https?:\/\//, '')}
         </span>
       </div>

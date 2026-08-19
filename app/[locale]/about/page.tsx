@@ -60,8 +60,8 @@ function AboutContent() {
                     // The opening paragraph is set larger — it is the argument;
                     // the rest is the evidence.
                     index === 0
-                      ? 'text-display mb-8 text-[1.625rem] leading-[1.45] text-ink sm:text-[1.875rem]'
-                      : 'mb-6 text-[1.0625rem] leading-[1.85] text-ink-muted'
+                      ? 'text-title-3 measure-wide mb-7 font-normal'
+                      : 'text-body measure-wide mb-6 text-label-secondary'
                   }
                 >
                   {paragraph}
@@ -72,23 +72,20 @@ function AboutContent() {
         </div>
       </Section>
 
-      <Section tone="surface" labelledBy="principles-title">
+      <Section tone="secondary" labelledBy="principles-title">
         <SectionHeading title={t('principles.title')} id="principles-title" />
 
         <dl className="mt-14 grid gap-x-14 gap-y-12 sm:grid-cols-2">
           {principles.map((principle, index) => (
             <Reveal key={principle} delay={index * 80}>
-              <div className="border-t border-line pt-6">
-                <span
-                  aria-hidden="true"
-                  className="eyebrow block text-accent tabular-nums"
-                >
+              <div className="border-t border-separator pt-6">
+                <span aria-hidden="true" className="text-overline block text-accent tabular-nums">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <dt className="text-display mt-4 text-[1.5rem]">
+                <dt className="text-title-3 mt-4">
                   {t(`principles.items.${principle}.title`)}
                 </dt>
-                <dd className="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">
+                <dd className="text-callout mt-3 text-label-secondary">
                   {t(`principles.items.${principle}.body`)}
                 </dd>
               </div>

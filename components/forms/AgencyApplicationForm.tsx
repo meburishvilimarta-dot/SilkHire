@@ -29,11 +29,8 @@ const REPLY_DAYS = 5;
 
 function Fieldset({ legend, children }: { legend: string; children: React.ReactNode }) {
   return (
-    <fieldset className="border-t border-line pt-10 first:border-t-0 first:pt-0">
-      <legend className="eyebrow flex items-center gap-3 text-accent">
-        <span aria-hidden="true" className="h-px w-6 bg-accent/40" />
-        {legend}
-      </legend>
+    <fieldset className="border-t border-separator pt-10 first:border-t-0 first:pt-0">
+      <legend className="text-overline text-accent">{legend}</legend>
       <div className="mt-7 space-y-7">{children}</div>
     </fieldset>
   );
@@ -235,7 +232,7 @@ export function AgencyApplicationForm() {
 
       <Honeypot name="agency-application" registration={register('fax')} />
 
-      <div className="border-t border-line pt-8">
+      <div className="border-t border-separator pt-8">
         <Button type="submit" size="lg" disabled={status === 'submitting'}>
           {status === 'submitting' ? (
             <>

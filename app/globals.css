@@ -1,65 +1,428 @@
 @import 'tailwindcss';
 
-/**
- * SilkHire design system.
- *
- * One idea carries the whole site: a drawn route. It is the logo mark, the
- * hero graphic, the timeline spine, the step connector and the section rule.
- * Everything else stays quiet so that line reads.
- *
- * Two colours and a neutral ramp. Deep evergreen for structure and action,
- * ochre for emphasis, warm paper underneath. No third hue, anywhere.
- */
+/* =============================================================================
+   SilkHire design system
+
+   Built on the principles in Apple's Human Interface Guidelines — not on
+   Apple's branding, typefaces or iconography. What is borrowed is the method:
+
+   · Colour is SEMANTIC — named for its purpose, never its appearance — and
+     every token has a light, a dark and an increased-contrast value.
+     ("Even if your app ships in a single appearance mode, provide both light
+     and dark colors." — HIG, Color)
+   · Type is a set of TEXT STYLES. Each one fixes size, weight, leading and
+     tracking together, so hierarchy is chosen by name rather than assembled
+     ad hoc at the call site. ("A text style specifies a combination of font
+     weight, point size, and leading values." — HIG, Typography)
+   · MATERIALS belong to the functional layer only — the bar that floats over
+     content. Never in the content layer itself. ("Don't use Liquid Glass in
+     the content layer." — HIG, Materials)
+   · Controls are capsules or rounded rectangles, never smaller than 44px.
+     ("In general, prefer circular or capsule-shape buttons"; 44x44pt minimum
+     hit target. — HIG, Buttons / Accessibility)
+   · Motion is brief, purposeful and optional.
+
+   Sources, all Apple:
+     developer.apple.com/design/human-interface-guidelines/{typography, color,
+     materials, layout, motion, accessibility, buttons, dark-mode}
+     developer.apple.com/design/resources
+   ============================================================================= */
+
 @theme {
-  /* Light ground */
-  --color-paper: #fbf9f5;
-  --color-surface: #ffffff;
-  --color-sunken: #f3f0e9;
+  /* ---------------------------------------------------------------------------
+     Colour — semantic roles, light appearance.
+     Contrast ratios below are measured, not estimated. HIG asks for 4.5:1 up
+     to 17pt, 3:1 at 18pt and above or when bold.
+     --------------------------------------------------------------------------- */
 
-  --color-ink: #0c1411;
-  --color-ink-muted: #55605b;
-  --color-ink-subtle: #7e8983;
+  /* Backgrounds, by depth in the hierarchy. */
+  --color-bg: #ffffff;
+  --color-bg-secondary: #f5f5f7;
+  --color-bg-tertiary: #ebebef;
 
-  --color-line: #e6e1d7;
-  --color-line-strong: #cfc8b9;
+  /* Fills — the resting surface of a control sitting on a background. */
+  --color-fill: rgb(120 120 128 / 0.08);
+  --color-fill-secondary: rgb(120 120 128 / 0.12);
 
-  /* Dark ground — header, footer, hero, CTA panels */
-  --color-void: #0a100e;
-  --color-void-raised: #121b18;
-  --color-void-line: #1f2c27;
-  --color-void-ink: #f4f1ea;
-  --color-void-muted: #97a59f;
+  /* Labels, strongest to weakest. */
+  --color-label: #1d1d1f; /* 16.8:1 on bg */
+  --color-label-secondary: #5c5c62; /* 6.6:1  */
+  --color-label-tertiary: #68686d; /* 5.5:1  */
+  --color-label-quaternary: #8e8e93; /* decorative only */
 
-  /* Brand */
-  --color-brand: #0e5344;
-  --color-brand-deep: #0a3d32;
-  --color-brand-bright: #17836a;
-  --color-brand-soft: #e3efea;
-  --color-accent: #c0803a;
-  --color-accent-bright: #e0a45c;
-  --color-accent-soft: #f8f0e3;
+  /* Separators. The translucent one is the hairline; the opaque one is for
+     places where a rule must not let the layer beneath show through. */
+  --color-separator: rgb(60 60 67 / 0.16);
+  --color-separator-opaque: #d8d8dc;
 
-  --color-danger: #9c3520;
-  --color-danger-soft: #fbeeea;
-  --color-success: #1c6b47;
-  --color-success-soft: #e8f3ed;
+  /* One accent. It carries interactivity and nothing else. */
+  --color-accent: #0a6e52; /* 6.2:1 on bg; white on it is 6.2:1 */
+  --color-accent-hover: #085740;
+  --color-accent-muted: rgb(10 110 82 / 0.1);
+  --color-on-accent: #ffffff;
 
-  /* Editorial serif for display, matching sans for everything else. Both
-     cover Mkhedruli, so Georgian and English share one set of metrics. */
-  --font-display: var(--font-serif-georgian), Georgia, 'Times New Roman', serif;
-  --font-sans: var(--font-sans-georgian), 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --color-positive: #1a7f4f;
+  --color-positive-muted: rgb(26 127 79 / 0.1);
+  --color-critical: #b3261e; /* 6.5:1 on bg */
+  --color-critical-muted: rgb(179 38 30 / 0.08);
 
-  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Material — the translucent bar over content. */
+  --color-material-bar: rgb(255 255 255 / 0.72);
 
-  --animate-draw: draw 2.4s var(--ease-out-soft) forwards;
-  --animate-travel: travel 4.5s linear infinite;
-  --animate-pulse-ring: pulse-ring 3.2s var(--ease-out-soft) infinite;
-  --animate-drift: drift 9s ease-in-out infinite alternate;
+  /* ---------------------------------------------------------------------------
+     Type. One family across the whole hierarchy.
+
+     The system UI stack comes first, so Apple devices render San Francisco —
+     including SF Georgian, which covers Mkhedruli and Mtavruli — natively.
+     Noto Sans Georgian is the webfont behind it, because most of this site's
+     audience is on Windows and Android where no system font covers Georgian
+     well. Both are neutral grotesques, so the substitution is not jarring.
+
+     SF is not shipped as a webfont here: Apple licenses it for interfaces on
+     Apple platforms, not for redistribution from our own origin.
+     --------------------------------------------------------------------------- */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Georgian',
+    var(--font-noto-georgian), 'Segoe UI', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---------------------------------------------------------------------------
+     Radius. Rounded rectangles throughout; controls are capsules.
+     Nest concentrically: an inner radius should be the outer radius minus the
+     padding between them, or the corners will look wrong.
+     --------------------------------------------------------------------------- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-2xl: 36px;
+
+  /* Elevation. Two steps only, both restrained — depth here comes from
+     material and separators, not from drop shadows. */
+  --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.04), 0 4px 16px rgb(0 0 0 / 0.06);
+  --shadow-floating: 0 2px 6px rgb(0 0 0 / 0.06), 0 16px 40px rgb(0 0 0 / 0.10);
+
+  /* Motion. Brief and precise; nothing here runs longer than 500ms. */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.32, 0.72, 0, 1);
+  --duration-fast: 150ms;
+  --duration-medium: 260ms;
+  --duration-slow: 420ms;
+
+  /* The one repeating animation on the site, in the hero graphic. */
+  --animate-draw: draw 2s var(--ease-emphasized) forwards;
+  --animate-travel: travel 5s linear infinite;
+  --animate-pulse-ring: pulse-ring 3.2s var(--ease-emphasized) infinite;
 }
+
+/* -----------------------------------------------------------------------------
+   Dark appearance. Follows the system; there is deliberately no in-page theme
+   switch. ("Avoid offering an app-specific appearance setting… they may think
+   your app is broken because it doesn't respond to their systemwide appearance
+   choice." — HIG, Dark Mode)
+
+   These are not inversions. Backgrounds lift off pure black in steps, labels
+   soften rather than going pure white, and the accent brightens — dark
+   surfaces make a mid-tone accent read as muddy.
+   ----------------------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #000000;
+    --color-bg-secondary: #1c1c1e;
+    --color-bg-tertiary: #2c2c2e;
+
+    --color-fill: rgb(120 120 128 / 0.20);
+    --color-fill-secondary: rgb(120 120 128 / 0.28);
+
+    --color-label: #f5f5f7; /* 19.3:1 on bg */
+    --color-label-secondary: #a1a1a8; /* 8.2:1  */
+    --color-label-tertiary: #98989f; /* 7.3:1  */
+    --color-label-quaternary: #6a6a70;
+
+    --color-separator: rgb(84 84 88 / 0.6);
+    --color-separator-opaque: #38383a;
+
+    --color-accent: #3ddc9a; /* 11.9:1 on bg */
+    --color-accent-hover: #5ee8ae;
+    --color-accent-muted: rgb(61 220 154 / 0.14);
+    --color-on-accent: #04241a; /* 11.9:1 on the accent fill */
+
+    --color-positive: #42d391;
+    --color-positive-muted: rgb(66 211 145 / 0.14);
+    --color-critical: #ff6b5e; /* 7.5:1 on bg */
+    --color-critical-muted: rgb(255 107 94 / 0.12);
+
+    --color-material-bar: rgb(22 22 24 / 0.72);
+
+    --shadow-raised: 0 1px 2px rgb(0 0 0 / 0.5), 0 4px 16px rgb(0 0 0 / 0.4);
+    --shadow-floating: 0 2px 6px rgb(0 0 0 / 0.6), 0 16px 40px rgb(0 0 0 / 0.5);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Increased contrast. HIG: "With the Increase Contrast setting turned on, the
+   color differences become far more apparent… supply an increased contrast
+   option for each variant." Separators go solid, weak labels step up, and
+   translucency is dropped.
+   ----------------------------------------------------------------------------- */
+@media (prefers-contrast: more) {
+  :root {
+    --color-label-secondary: #3a3a3e;
+    --color-label-tertiary: #3a3a3e;
+    --color-separator: rgb(60 60 67 / 0.5);
+    --color-accent: #05553f;
+    --color-material-bar: #ffffff;
+  }
+}
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root {
+    --color-label-secondary: #e8e8ea;
+    --color-label-tertiary: #e8e8ea;
+    --color-separator: rgb(140 140 148 / 0.8);
+    --color-accent: #6ff0b8;
+    --color-material-bar: #000000;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* Tells the browser to render form controls and scrollbars in whichever
+       appearance is active. Without it, dark mode leaves light scrollbars. */
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-label);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem; /* 17px — the HIG default body size on iOS */
+    line-height: 1.53;
+    -webkit-font-smoothing: antialiased;
+    font-synthesis-weight: none;
+    /* Georgian compounds run long and have no hyphenation dictionary in most
+       browsers. Without this a single word paints outside its column and the
+       whole page gains a horizontal scrollbar, even though no element's box
+       actually overflows. */
+    overflow-wrap: break-word;
+  }
+
+  /* Headings inherit from the text-style utilities; these are only floors so
+     an unstyled heading is never smaller than body text. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* One focus ring site-wide, on the accent, never removed. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  ::selection {
+    background-color: var(--color-accent-muted);
+    color: var(--color-label);
+  }
+
+  /* Any control that can be pointed at meets the 44pt minimum target. */
+  button,
+  [role='button'],
+  a[href],
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+  }
+}
+
+/* =============================================================================
+   Text styles
+
+   Each utility sets size, weight, leading and tracking as one decision, the
+   way a HIG text style does. Sizes are fluid so the scale holds together
+   between a phone and a wide display without a stack of breakpoint overrides.
+   Tracking tightens as size grows, which is what the system font does
+   automatically at every point size.
+   ============================================================================= */
+
+@utility text-display {
+  font-size: clamp(2.25rem, 1.35rem + 3.6vw, 4rem);
+  line-height: 1.06;
+  font-weight: 600;
+  letter-spacing: -0.028em;
+}
+
+@utility text-title-1 {
+  font-size: clamp(1.875rem, 1.35rem + 2.1vw, 2.75rem);
+  line-height: 1.12;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+}
+
+@utility text-title-2 {
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  line-height: 1.18;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+}
+
+@utility text-title-3 {
+  font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+/* Headline and body are the same size — weight alone separates them, which is
+   how the HIG distinguishes a heading from the text under it. */
+@utility text-headline {
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+}
+
+@utility text-body {
+  font-size: 1.0625rem;
+  line-height: 1.53;
+  font-weight: 400;
+  letter-spacing: -0.004em;
+}
+
+@utility text-body-lead {
+  font-size: clamp(1.125rem, 1.0rem + 0.5vw, 1.3125rem);
+  line-height: 1.5;
+  font-weight: 400;
+  letter-spacing: -0.008em;
+}
+
+@utility text-callout {
+  font-size: 1rem;
+  line-height: 1.45;
+  font-weight: 400;
+  letter-spacing: -0.002em;
+}
+
+@utility text-subheadline {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+@utility text-footnote {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-weight: 400;
+  letter-spacing: 0.004em;
+}
+
+@utility text-caption {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* The small all-caps label that opens a section. Never below 11px, which is
+   the HIG minimum legible size on iOS. */
+@utility text-overline {
+  font-size: 0.75rem;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* =============================================================================
+   Layout
+   ============================================================================= */
+
+@utility container-page {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+
+  @media (width >= 80rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/** Caps a text column at a comfortable measure, like the HIG readable guide. */
+@utility measure {
+  max-width: 38rem;
+}
+
+@utility measure-wide {
+  max-width: 46rem;
+}
+
+/* =============================================================================
+   Materials
+
+   The functional layer only — the bar that floats above content. Content-layer
+   surfaces stay opaque.
+
+   Both fallbacks matter: `prefers-reduced-transparency` is an explicit request
+   to stop seeing through things, and browsers without backdrop-filter would
+   otherwise render an under-opaque bar with content showing through it.
+   ============================================================================= */
+
+@utility material-bar {
+  background-color: var(--color-material-bar);
+  /* Only the unprefixed property: the build step adds vendor prefixes from
+     its own browser targets, and writing both here made it emit just the
+     -webkit- form, which would leave Firefox with no blur at all. */
+  backdrop-filter: saturate(180%) blur(20px);
+
+  @supports not (backdrop-filter: blur(1px)) {
+    background-color: var(--color-bg);
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    background-color: var(--color-bg);
+    backdrop-filter: none;
+  }
+
+  @media (prefers-contrast: more) {
+    background-color: var(--color-bg);
+    backdrop-filter: none;
+  }
+}
+
+/** Hairline separator that sits *below* a bar without adding layout height. */
+@utility hairline-bottom {
+  box-shadow: inset 0 -1px 0 var(--color-separator);
+}
+
+@utility hairline-top {
+  box-shadow: inset 0 1px 0 var(--color-separator);
+}
+
+/* =============================================================================
+   Motion
+   ============================================================================= */
 
 @keyframes draw {
   from {
-    stroke-dashoffset: var(--draw-length, 600);
+    stroke-dashoffset: var(--draw-length, 1);
   }
   to {
     stroke-dashoffset: 0;
@@ -68,7 +431,7 @@
 
 @keyframes travel {
   from {
-    stroke-dashoffset: var(--travel-length, 600);
+    stroke-dashoffset: var(--travel-length, 1);
   }
   to {
     stroke-dashoffset: 0;
@@ -78,7 +441,7 @@
 @keyframes pulse-ring {
   0% {
     transform: scale(0.6);
-    opacity: 0.55;
+    opacity: 0.5;
   }
   70%,
   100% {
@@ -90,97 +453,46 @@
 @keyframes rise-in {
   from {
     opacity: 0;
-    transform: translate3d(0, 12px, 0);
+    transform: translate3d(0, 10px, 0);
   }
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-@keyframes drift {
-  from {
-    transform: translate3d(0, -6px, 0);
-  }
-  to {
-    transform: translate3d(0, 6px, 0);
-  }
-}
-
-@layer base {
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-  }
-
-  body {
-    background-color: var(--color-paper);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  h1,
-  h2,
-  h3 {
-    font-family: var(--font-display);
-    text-wrap: balance;
-    letter-spacing: -0.015em;
-  }
-
-  p {
-    text-wrap: pretty;
-  }
-
-  /* One focus treatment site-wide. Never removed, only re-coloured on dark. */
-  :focus-visible {
-    outline: 2px solid var(--color-brand-bright);
-    outline-offset: 3px;
-    border-radius: 3px;
-  }
-
-  .on-dark :focus-visible,
-  .on-dark:focus-visible {
-    outline-color: var(--color-accent-bright);
-  }
-
-  ::selection {
-    background-color: var(--color-brand);
-    color: var(--color-void-ink);
   }
 }
 
 @layer components {
   /**
-   * Scroll reveal. Hidden state applies only under `.js`, which an inline
-   * script in the layout sets — so with JavaScript off, every section renders
+   * Scroll reveal. The hidden state applies only under `.js`, which an inline
+   * script in the layout sets — so with JavaScript off every section renders
    * visible rather than blank.
+   *
+   * The movement is 10px, not 20: the HIG asks for motion that is brief and
+   * precise rather than decorative.
    */
   .js [data-reveal] {
     opacity: 0;
-    transform: translate3d(0, 18px, 0);
+    transform: translate3d(0, 10px, 0);
     transition:
-      opacity 0.7s var(--ease-out-soft),
-      transform 0.7s var(--ease-out-soft);
+      opacity var(--duration-slow) var(--ease-standard),
+      transform var(--duration-slow) var(--ease-standard);
     transition-delay: var(--reveal-delay, 0ms);
-    will-change: opacity, transform;
   }
 
   .js [data-reveal][data-revealed] {
     opacity: 1;
     transform: none;
-    will-change: auto;
   }
 }
 
+/* Reduced motion RESOLVES reveals rather than disabling them — a disabled
+   reveal would leave content invisible forever. Repeating and peripheral
+   animation stops entirely, which is what the setting actually asks for. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  /* Reveals resolve instantly rather than being disabled, so content that
-     depends on them is never left invisible. */
   .js [data-reveal],
   .js [data-reveal][data-revealed] {
     opacity: 1;
@@ -196,75 +508,4 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-@utility container-page {
-  margin-inline: auto;
-  width: 100%;
-  max-width: 78rem;
-  padding-inline: 1.25rem;
-
-  @media (width >= 48rem) {
-    padding-inline: 2rem;
-  }
-
-  @media (width >= 80rem) {
-    padding-inline: 2.5rem;
-  }
-}
-
-/** Hairline rule that fades at both ends — the route line, at rest. */
-@utility rule-fade {
-  height: 1px;
-  border: 0;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--color-line-strong) 15%,
-    var(--color-line-strong) 85%,
-    transparent
-  );
-}
-
-@utility rule-fade-dark {
-  height: 1px;
-  border: 0;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--color-void-line) 15%,
-    var(--color-void-line) 85%,
-    transparent
-  );
-}
-
-/** Very fine paper grain. Pure CSS, no image request. */
-@utility grain {
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.035;
-    background-image: radial-gradient(currentColor 0.5px, transparent 0.5px);
-    background-size: 4px 4px;
-  }
-}
-
-/** Display type: the serif, at section-heading scale and above. */
-@utility text-display {
-  font-family: var(--font-display);
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-}
-
-/** The small uppercase label that opens every section. */
-@utility eyebrow {
-  font-family: var(--font-sans);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
 }

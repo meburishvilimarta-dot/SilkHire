@@ -1,51 +1,43 @@
 import type { ReactNode } from 'react';
 
 /**
- * The one card treatment used site-wide: a hairline border, a whisper of
- * elevation, and on hover a lift plus a single ochre rule drawn along the top
- * edge — the route line again, at component scale.
+ * The one card treatment on the site: a secondary-background surface, a
+ * hairline, and a 20px radius.
  *
- * `interactive` adds the hover behaviour; static cards stay flat so that
- * movement always means "this does something".
+ * Cards live in the content layer, so they are opaque — the HIG reserves
+ * translucent material for the functional layer floating above content. Depth
+ * comes from the background step and the separator, not from a drop shadow;
+ * `interactive` adds a restrained lift so that movement always means "this
+ * does something".
+ *
+ * Nest concentrically: with 24px of padding the inner radius should be about
+ * 8px (`rounded-xs`), not another 20.
  */
 export function Card({
   as: Tag = 'div',
   interactive = false,
-  tone = 'light',
   className,
   children,
 }: {
   as?: 'div' | 'li' | 'article';
   interactive?: boolean;
-  tone?: 'light' | 'dark';
   className?: string;
   children: ReactNode;
 }) {
-  const isDark = tone === 'dark';
-
   return (
     <Tag
       className={[
-        'group relative isolate overflow-hidden rounded-lg transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]',
-        isDark
-          ? 'bg-void-raised ring-1 ring-void-line ring-inset'
-          : 'bg-surface ring-1 ring-line ring-inset',
+        'group relative isolate rounded-lg bg-bg-secondary',
+        'border border-separator',
+        'transition-[transform,box-shadow,border-color] duration-[--duration-medium] ease-[--ease-standard]',
         interactive
-          ? isDark
-            ? 'hover:-translate-y-1 hover:ring-void-ink/20 hover:shadow-[0_24px_50px_-24px_rgba(0,0,0,0.75)]'
-            : 'hover:-translate-y-1 hover:ring-line-strong hover:shadow-[0_24px_50px_-28px_rgba(12,20,17,0.35)]'
+          ? 'hover:-translate-y-0.5 hover:border-label-quaternary/40 hover:shadow-raised'
           : '',
         className,
       ]
         .filter(Boolean)
         .join(' ')}
     >
-      {interactive ? (
-        <span
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 z-10 h-px origin-left scale-x-0 bg-gradient-to-r from-accent via-accent to-transparent transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
-        />
-      ) : null}
       {children}
     </Tag>
   );

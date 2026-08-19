@@ -18,36 +18,24 @@ export function HowItWorks() {
         id="how-it-works-title"
       />
 
-      <ol className="relative mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
-        {/* The route again: one line threading the three steps together. */}
-        <span
-          aria-hidden="true"
-          className="absolute top-3 right-[12%] left-[12%] hidden h-px bg-gradient-to-r from-transparent via-line-strong to-transparent md:block"
-        />
-
+      <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
         {steps.map((step, index) => (
-          <Reveal as="li" key={step} delay={index * 110} className="relative">
-            <span
-              aria-hidden="true"
-              className="relative z-10 block h-6 w-6 rounded-full border border-line-strong bg-paper"
-            >
-              <span className="absolute inset-[7px] rounded-full bg-accent" />
-            </span>
-
-            <p className="eyebrow mt-6 text-accent tabular-nums">
+          <Reveal as="li" key={step} delay={index * 80}>
+            {/* The number is set in the accent at caption size rather than as a
+                large graphic — it orders the steps without competing with the
+                titles for attention. */}
+            <p className="text-overline text-accent tabular-nums">
               {t(`steps.${step}.number`)}
             </p>
-            <h3 className="text-display mt-3 text-2xl sm:text-[1.75rem]">
-              {t(`steps.${step}.title`)}
-            </h3>
-            <p className="mt-4 text-[0.9375rem] leading-relaxed text-ink-muted">
+            <h3 className="text-title-3 mt-3">{t(`steps.${step}.title`)}</h3>
+            <p className="text-callout mt-3 text-label-secondary">
               {t(`steps.${step}.body`)}
             </p>
           </Reveal>
         ))}
       </ol>
 
-      <Reveal delay={160} className="mt-14">
+      <Reveal delay={140} className="mt-12">
         <ButtonLink href="/contact" size="lg">
           {t('cta')}
           <ButtonArrow />

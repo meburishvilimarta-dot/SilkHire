@@ -108,16 +108,11 @@ function AgencyDetail({ agency }: { agency: Agency }) {
 
   return (
     <article>
-      <header className="on-dark grain relative isolate overflow-hidden bg-void text-void-ink">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(75%_70%_at_85%_0%,rgba(23,131,106,0.18),transparent_62%)]"
-        />
-
-        <div className="relative container-page py-14 sm:py-20">
+      <header className="hairline-bottom bg-bg">
+        <div className="container-page py-12 sm:py-16">
           <Link
             href="/agencies"
-            className="group inline-flex items-center gap-2 text-sm text-void-muted transition-colors hover:text-void-ink"
+            className="text-subheadline group inline-flex min-h-11 items-center gap-2 text-accent transition-opacity duration-[--duration-fast] hover:opacity-70"
           >
             <svg
               aria-hidden="true"
@@ -127,23 +122,21 @@ function AgencyDetail({ agency }: { agency: Agency }) {
               strokeWidth="1.6"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-x-1"
+              className="h-3.5 w-3.5 transition-transform duration-[--duration-fast] group-hover:-translate-x-0.5"
             >
               <path d="M13 8H3m4-4-4 4 4 4" />
             </svg>
             {tCommon('backToAgencies')}
           </Link>
 
-          <div className="mt-8 flex flex-wrap items-start justify-between gap-x-10 gap-y-5">
-            <div className="max-w-2xl">
-              <h1 className="text-display text-[2.25rem] sm:text-5xl lg:text-[3.5rem]">
-                {agency.name}
-              </h1>
-              <p className="mt-4 text-lg leading-relaxed text-void-muted">
+          <div className="mt-6 flex flex-wrap items-start justify-between gap-x-10 gap-y-4">
+            <div className="measure-wide">
+              <h1 className="text-display">{agency.name}</h1>
+              <p className="text-body-lead mt-4 text-label-secondary">
                 {agency.tagline[locale]}
               </p>
             </div>
-            <Badge tone={isVetted ? 'accent' : 'dark'}>
+            <Badge tone={isVetted ? 'positive' : 'outline'}>
               {isVetted ? <CheckMark /> : null}
               {isVetted ? tCard('vetted') : tCard('pending')}
             </Badge>
@@ -152,42 +145,40 @@ function AgencyDetail({ agency }: { agency: Agency }) {
           <ul className="mt-8 flex flex-wrap gap-2">
             {agency.categories.map((category) => (
               <li key={category}>
-                <Badge tone="dark">{tCategories(category)}</Badge>
+                <Badge>{tCategories(category)}</Badge>
               </li>
             ))}
             {agency.engagementModels.map((model) => (
               <li key={model}>
-                <Badge tone="dark">{tEngagement(model)}</Badge>
+                <Badge tone="outline">{tEngagement(model)}</Badge>
               </li>
             ))}
           </ul>
 
           {/* The three numbers, set large and directly under the name. */}
-          <dl className="mt-12 grid max-w-2xl grid-cols-1 gap-6 border-t border-void-line pt-8 sm:grid-cols-3 sm:gap-10">
+          <dl className="mt-10 grid max-w-2xl grid-cols-1 gap-6 border-t border-separator pt-7 sm:grid-cols-3 sm:gap-10">
             {headline.map((item) => (
               <div key={item.label}>
-                <dt className="text-[0.8125rem] text-void-muted">{item.label}</dt>
-                <dd className="text-display mt-2 text-[1.75rem] leading-tight tabular-nums sm:text-[2rem]">
-                  {item.value}
-                </dd>
+                <dt className="text-footnote text-label-tertiary">{item.label}</dt>
+                <dd className="text-title-2 mt-1.5 tabular-nums">{item.value}</dd>
               </div>
             ))}
           </dl>
         </div>
       </header>
 
-      <div className="container-page grid gap-14 py-16 lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-20 lg:py-24">
+      <div className="container-page grid gap-14 py-16 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16 lg:py-20">
         <div className="min-w-0">
           <Reveal as="section" className="scroll-mt-28">
-            <h2 className="eyebrow text-accent">{t('about')}</h2>
+            <h2 className="text-overline text-accent">{t('about')}</h2>
             <div className="mt-6 space-y-5">
               {toParagraphs(agency.description[locale]).map((paragraph, index) => (
                 <p
                   key={index}
                   className={
                     index === 0
-                      ? 'text-lg leading-[1.75] text-ink'
-                      : 'leading-[1.8] text-ink-muted'
+                      ? 'text-body-lead measure-wide'
+                      : 'text-body measure-wide text-label-secondary'
                   }
                 >
                   {paragraph}
@@ -197,14 +188,14 @@ function AgencyDetail({ agency }: { agency: Agency }) {
           </Reveal>
 
           <Reveal as="section" className="mt-16">
-            <h2 className="eyebrow text-accent">{t('specialties')}</h2>
+            <h2 className="text-overline text-accent">{t('specialties')}</h2>
             <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2">
               {agency.specialties.map((specialty) => (
                 <li
                   key={specialty.en}
-                  className="flex items-start gap-3 border-b border-line pb-3 text-[0.9375rem] text-ink-muted"
+                  className="text-subheadline flex items-start gap-3 border-b border-separator pb-3 text-label-secondary"
                 >
-                  <CheckMark className="mt-1 h-3.5 w-3.5 shrink-0 text-brand" />
+                  <CheckMark className="mt-1 h-3.5 w-3.5 shrink-0 text-accent" />
                   {specialty[locale]}
                 </li>
               ))}
@@ -213,16 +204,16 @@ function AgencyDetail({ agency }: { agency: Agency }) {
 
           {agency.caseStudies.length > 0 ? (
             <section className="mt-16">
-              <h2 className="eyebrow text-accent">{t('caseStudies')}</h2>
+              <h2 className="text-overline text-accent">{t('caseStudies')}</h2>
               <ul className="mt-6 space-y-5">
                 {agency.caseStudies.map((study, index) => (
                   <Reveal as="li" key={study.title.en} delay={index * 90}>
-                    <Card className="p-7 sm:p-8">
-                      <h3 className="text-display text-xl">{study.title[locale]}</h3>
-                      <p className="mt-3 leading-relaxed text-ink-muted">
+                    <Card className="p-6 sm:p-7">
+                      <h3 className="text-title-3">{study.title[locale]}</h3>
+                      <p className="text-callout mt-3 text-label-secondary">
                         {study.result[locale]}
                       </p>
-                      <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-3 border-t border-line pt-4 text-xs">
+                      <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-3 border-t border-separator pt-4">
                         {[
                           {
                             label: t('caseStudyIndustry'),
@@ -238,10 +229,10 @@ function AgencyDetail({ agency }: { agency: Agency }) {
                           },
                         ].map((item) => (
                           <div key={item.label}>
-                            <dt className="tracking-wide text-ink-subtle uppercase">
+                            <dt className="text-caption text-label-tertiary">
                               {item.label}
                             </dt>
-                            <dd className="mt-1 text-[0.8125rem] font-medium">
+                            <dd className="text-footnote mt-1 font-medium">
                               {item.value}
                             </dd>
                           </div>
@@ -258,18 +249,18 @@ function AgencyDetail({ agency }: { agency: Agency }) {
         <aside className="lg:sticky lg:top-28 lg:self-start">
           <section
             aria-labelledby="glance-heading"
-            className="rounded-lg bg-surface p-7 ring-1 ring-line ring-inset"
+            className="rounded-lg border border-separator bg-bg-secondary p-6"
           >
-            <h2 id="glance-heading" className="eyebrow text-ink-subtle">
+            <h2 id="glance-heading" className="text-caption text-label-tertiary">
               {t('atAGlance')}
             </h2>
-            <dl className="mt-5 space-y-4 text-sm">
+            <dl className="text-subheadline mt-4 space-y-3.5">
               {facts.map((fact) => (
                 <div
                   key={fact.label}
-                  className="flex justify-between gap-5 border-b border-line pb-4 last:border-0 last:pb-0"
+                  className="flex justify-between gap-5 border-b border-separator pb-3.5 last:border-0 last:pb-0"
                 >
-                  <dt className="text-ink-subtle">{fact.label}</dt>
+                  <dt className="text-label-tertiary">{fact.label}</dt>
                   <dd className="text-right font-medium">{fact.value}</dd>
                 </div>
               ))}
@@ -278,23 +269,23 @@ function AgencyDetail({ agency }: { agency: Agency }) {
 
           <section
             aria-labelledby="vetting-heading"
-            className="mt-6 rounded-lg bg-brand-soft/60 p-7 ring-1 ring-brand/12 ring-inset"
+            className="mt-5 rounded-lg border border-separator bg-bg-secondary p-6"
           >
-            <h2 id="vetting-heading" className="eyebrow text-brand-deep">
+            <h2 id="vetting-heading" className="text-caption text-accent">
               {t('vetting')}
             </h2>
-            <p className="mt-2 text-xs leading-relaxed text-ink-muted">
+            <p className="text-footnote mt-2 text-label-secondary">
               {isVetted
                 ? t('vettedOn', { date: formatDate(agency.vetting.verifiedOn, locale) })
                 : t('pendingNote')}
             </p>
-            <ul className="mt-5 space-y-3">
+            <ul className="text-subheadline mt-4 space-y-3">
               {allChecks.map((check) => {
                 const passed = agency.vetting.checks.includes(check);
                 return (
-                  <li key={check} className="flex items-start gap-3 text-sm">
+                  <li key={check} className="flex items-start gap-3">
                     {passed ? (
-                      <CheckMark className="mt-1 h-3.5 w-3.5 shrink-0 text-brand" />
+                      <CheckMark className="mt-1 h-3.5 w-3.5 shrink-0 text-positive" />
                     ) : (
                       <svg
                         aria-hidden="true"
@@ -302,12 +293,12 @@ function AgencyDetail({ agency }: { agency: Agency }) {
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="1.4"
-                        className="mt-1 h-3.5 w-3.5 shrink-0 text-line-strong"
+                        className="mt-1 h-3.5 w-3.5 shrink-0 text-label-quaternary"
                       >
                         <circle cx="6" cy="6" r="4" strokeDasharray="2 2" />
                       </svg>
                     )}
-                    <span className={passed ? 'text-ink' : 'text-ink-subtle'}>
+                    <span className={passed ? 'text-label' : 'text-label-tertiary'}>
                       {tChecks(check)}
                     </span>
                   </li>
@@ -318,24 +309,16 @@ function AgencyDetail({ agency }: { agency: Agency }) {
 
           <section
             aria-labelledby="cta-heading"
-            className="on-dark grain relative mt-6 overflow-hidden rounded-lg bg-void p-7 text-void-ink"
+            className="mt-5 rounded-lg border border-separator bg-bg-secondary p-6"
           >
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_80%_at_20%_0%,rgba(23,131,106,0.25),transparent_65%)]"
-            />
-            <div className="relative">
-              <h2 id="cta-heading" className="text-display text-xl">
-                {t('cta.title', { name: agency.name })}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-void-muted">
-                {t('cta.body')}
-              </p>
-              <ButtonLink href="/contact" variant="inverse" className="mt-6 w-full">
-                {t('cta.button')}
-                <ButtonArrow />
-              </ButtonLink>
-            </div>
+            <h2 id="cta-heading" className="text-headline">
+              {t('cta.title', { name: agency.name })}
+            </h2>
+            <p className="text-subheadline mt-2 text-label-secondary">{t('cta.body')}</p>
+            <ButtonLink href="/contact" className="mt-5 w-full">
+              {t('cta.button')}
+              <ButtonArrow />
+            </ButtonLink>
           </section>
         </aside>
       </div>

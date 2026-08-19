@@ -51,7 +51,7 @@ function ForAgenciesContent() {
         title={t('hero.title')}
         subtitle={t('hero.subtitle')}
       >
-        <ButtonLink href="#apply" variant="inverse" size="lg">
+        <ButtonLink href="#apply" size="lg">
           {tCommon('listAgency')}
           <ButtonArrow />
         </ButtonLink>
@@ -63,17 +63,12 @@ function ForAgenciesContent() {
         <ul className="mt-14 grid gap-6 sm:grid-cols-2">
           {reasons.map((reason, index) => (
             <Reveal as="li" key={reason} delay={index * 80}>
-              <Card interactive className="h-full p-8">
-                <span
-                  aria-hidden="true"
-                  className="eyebrow block text-accent tabular-nums"
-                >
+              <Card className="h-full p-7 sm:p-8">
+                <span aria-hidden="true" className="text-overline block text-accent tabular-nums">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <h3 className="text-display mt-4 text-[1.5rem]">
-                  {t(`why.items.${reason}.title`)}
-                </h3>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">
+                <h3 className="text-title-3 mt-4">{t(`why.items.${reason}.title`)}</h3>
+                <p className="text-callout mt-3 text-label-secondary">
                   {t(`why.items.${reason}.body`)}
                 </p>
               </Card>
@@ -82,34 +77,28 @@ function ForAgenciesContent() {
         </ul>
       </Section>
 
-      <Section tone="surface" labelledBy="process-title">
+      <Section tone="secondary" labelledBy="process-title">
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div>
             <SectionHeading title={t('process.title')} id="process-title" />
 
-            <ol className="relative mt-10">
-              <span
-                aria-hidden="true"
-                className="absolute top-4 bottom-10 left-[15px] w-px bg-line-strong"
-              />
+            <ol className="mt-10">
               {processSteps.map((step, index) => (
                 <Reveal
                   as="li"
                   key={step}
                   delay={index * 80}
-                  className="relative flex gap-6 pb-9 last:pb-0"
+                  className="flex gap-5 pb-8 last:pb-0"
                 >
                   <span
                     aria-hidden="true"
-                    className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-xs font-semibold text-void-ink tabular-nums"
+                    className="text-caption flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent-muted text-accent tabular-nums"
                   >
                     {index + 1}
                   </span>
-                  <div className="pt-1">
-                    <h3 className="text-display text-xl">
-                      {t(`process.steps.${step}.title`)}
-                    </h3>
-                    <p className="mt-2 text-[0.9375rem] leading-relaxed text-ink-muted">
+                  <div className="pt-0.5">
+                    <h3 className="text-headline">{t(`process.steps.${step}.title`)}</h3>
+                    <p className="text-callout mt-2 text-label-secondary">
                       {t(`process.steps.${step}.body`)}
                     </p>
                   </div>
@@ -120,9 +109,7 @@ function ForAgenciesContent() {
 
           <div>
             <Reveal>
-              <h2 className="text-display text-[1.75rem] sm:text-[2rem]">
-                {t('requirements.title')}
-              </h2>
+              <h2 className="text-title-2">{t('requirements.title')}</h2>
             </Reveal>
 
             <ul className="mt-7 space-y-4">
@@ -131,18 +118,18 @@ function ForAgenciesContent() {
                   as="li"
                   key={requirement}
                   delay={index * 60}
-                  className="flex gap-4 border-b border-line pb-4 text-[0.9375rem] leading-relaxed"
+                  className="text-subheadline flex gap-4 border-b border-separator pb-4"
                 >
-                  <CheckMark className="mt-1.5 h-3.5 w-3.5 shrink-0 text-brand" />
-                  <span className="text-ink-muted">{requirement}</span>
+                  <CheckMark className="mt-1 h-3.5 w-3.5 shrink-0 text-accent" />
+                  <span className="text-label-secondary">{requirement}</span>
                 </Reveal>
               ))}
             </ul>
 
             <Reveal delay={140}>
-              <div className="mt-10 border-l-2 border-accent/40 bg-accent-soft/50 px-6 py-5">
-                <h3 className="eyebrow text-accent">{t('pricing.title')}</h3>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ink-muted">
+              <div className="mt-10 rounded-lg border border-separator bg-bg px-6 py-5">
+                <h3 className="text-overline text-accent">{t('pricing.title')}</h3>
+                <p className="text-callout mt-3 text-label-secondary">
                   {t('pricing.body')}
                 </p>
               </div>
@@ -159,8 +146,8 @@ function ForAgenciesContent() {
             id="apply-title"
             align="center"
           />
-          <Reveal delay={120} className="mt-14">
-            <div className="rounded-xl bg-surface p-7 ring-1 ring-line ring-inset sm:p-10">
+          <Reveal delay={120} className="mt-12">
+            <div className="rounded-xl border border-separator bg-bg-secondary p-6 sm:p-10">
               <AgencyApplicationForm />
             </div>
           </Reveal>

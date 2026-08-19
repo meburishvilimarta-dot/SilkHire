@@ -82,7 +82,7 @@ export function ClientBriefForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative space-y-7">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative space-y-6">
       {status === 'error' ? <FormError /> : null}
       <ErrorSummary count={Object.keys(errors).length} />
 
@@ -190,7 +190,7 @@ export function ClientBriefForm() {
 
       <Honeypot name="client-brief" registration={register('website')} />
 
-      <div className="flex items-center gap-4 border-t border-line pt-8">
+      <div className="flex items-center gap-4 border-t border-separator pt-8">
         <Button type="submit" size="lg" disabled={status === 'submitting'}>
           {status === 'submitting' ? (
             <>
